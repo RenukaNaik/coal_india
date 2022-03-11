@@ -1,0 +1,731 @@
+{% extends 'home/base_map.html'%}
+{% load static %}
+{% block extra_resources%}
+
+{% endblock %}
+
+{% block map %}
+<div id="mapid" style="width: 100%; height: 100%;"></div>
+
+  <!-- Modal Structure -->
+  <div id="demo-modal" class="modal bottom-sheet"> 
+    <div id="content" class="modal-content"> 
+    </div> 
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+      </div>
+</div> 
+
+<div id="demo-modal1" class="modal bottom-sheet"> 
+  <div class="modal-header" style="text-align: right;">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat" style="color: white; text-align: right; font-weight: bold; font-size: 20px;">X</a>
+  </div>
+  <div id="content1" class="modal-content"> 
+  </div> 
+  
+</div> 
+
+<script>
+    let isClicked = false
+    var mymap = L.map('mapid').setView([19.7515-1,75.7139-1], 4.5);
+    
+    var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+	//var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+  //      streets  = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
+        
+    // const url = 'https://geonode.communitygis.net/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&outputFormat=json&typename=geonode:diet_data8jan';
+    const url = 'https://geoserver2.communitygis.net/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3Aposhan_dummy&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326&access_token=3r7XCeWunHUOfoyqPxnUNt7XY7ZWHu'
+    const url1 = 'https://geoserver2.communitygis.net/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3AOrganization_wise_Compendium&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326&access_token=3r7XCeWunHUOfoyqPxnUNt7XY7ZWHu'
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1
+    }).addTo(mymap);
+    
+    console.log('l/tilelayer');
+    var wms = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
+				//layer: layer,
+        layers: 'geonode:states_in_india',
+				format: 'image/png',
+				transparent: 'true',
+			});
+      wms.addTo(mymap);
+      //console.log(layers);
+      console.log(wms);
+
+    // var baseLayers = {
+		//"Grayscale": grayscale,
+		//"Streets": streets
+    //};
+    var baseLayers = {};
+    let indiaState = L.tileLayer.wms("https://geoserver2.communitygis.net/geoserver/wms", {
+            layers: "geonode:states_in_india",
+            format: "image/png",
+            transparent: "true",
+            tiled: "true",
+            opacity: 0.7,
+            }
+        );
+    let indiaDistrict = L.tileLayer.wms("https://geoserver2.communitygis.net/geoserver/wms", {
+        layers: "geonode:all_india_districts_11june2020",
+        format: "image/png",
+        transparent: "true",
+        tiled: "true",
+        opacity: 0.7,
+        }
+    );
+
+    let mahaHighways = L.tileLayer.wms("https://geoserver2.communitygis.net/geoserver/wms", {
+        layers: "geonode:osm_highways",
+        format: "image/png",
+        transparent: "true",
+        tiled: "true",
+        opacity: 0.7,
+        }
+    );
+
+    let mahaSchools = L.tileLayer.wms("https://geoserver2.communitygis.net/geoserver/wms", {
+        layers: "geonode:school_16_17_11april",
+        format: "image/png",
+        transparent: "true",
+        tiled: "true",
+        opacity: 0.7,
+        }
+    );
+</script>
+	
+<script>
+//wells
+    var wellIcon = L.icon({
+            iconUrl: "{% static 'map/images/well.png' %}",
+            iconSize:     [30, 40], // size of the icon
+            //shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+            // shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+        });
+    
+        
+   </script>
+   <style>
+       .another-popup .leaflet-popup-content-wrapper .leaflet-popup-content{
+          width: 200px;
+          height:400px;
+        }
+
+  /* .another-popup .leaflet-popup-content-wrapper {
+  background: beige;
+  color: #eee;
+  border-radius: 5%;
+  border-radius: 0px;
+} */
+/* .another-popup .leaflet-popup-content-wrapper a {
+  color: rgba(200, 200, 200, 0.1);
+}
+.another-popup .leaflet-popup-tip-container {
+  width: 10px;
+  height: 105px;
+
+}
+.another-popup .leaflet-popup-tip {
+  background: beige;
+  border: none;
+  box-shadow: none;
+} */
+   </style>
+         
+
+<script>
+     //poshan
+     var pvIcon = L.icon({
+            iconUrl: "{% static 'map/images/pw_logo.png' %}",
+            iconSize:     [40, 40], // size of the icon
+            //shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+            // shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+        });
+
+      var poshanlayerGroup = L.layerGroup();
+</script>
+     
+{% for i in vatikas %}
+ 
+   <script>
+      //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
+
+    var table1 = 
+         
+         `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+           <tbody>
+         {% if i.picture %}
+           <tr>
+             <tr><img src={{ i.picture.url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/>
+           </tr>
+           {% endif %}
+ 
+           {% if i.organization %}
+           <tr>
+               <th>Organization name</th>
+               <th>{{ i.organization}}</th>
+           </tr>
+           {% endif %}
+           
+           {% if i.district %}
+           <tr>
+             <td>District</td>
+             <td>{{ i.district}}</td>
+           </tr>
+           {% endif %}
+ 
+           {% if i.village %}
+           <tr>
+             <td>Village</td>
+             <td>{{ i.village }}</td>
+           </tr>
+           {% endif %}
+         </tbody>
+    </table>
+    </br>`
+       var popupOptions =
+        {
+          'maxWidth': '500',
+          'className' : 'another-popup' // classname for another popup
+        }
+        var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon}).addTo(mymap).bindPopup(table1, popupOptions);
+        poshanlayerGroup.addLayer(marker);
+        // Added  hover to open popups
+        marker.on('mouseover', function (e) {
+              this.openPopup(e.latlng);
+          });
+        marker.on('mouseout', function (e) {
+              this.openPopup(e.latlng);
+        });
+        marker.on('click', function (e) {
+              this.openPopup(e.latlng);
+        });
+
+        mymap.on ({
+            click: function() {
+                isClicked = false
+            },
+            popupclose: function () {
+                isClicked = false
+            }
+        })
+    </script>
+{% endfor %}
+
+<!-- coal -->
+
+<script>
+  
+  var pvIcon = L.icon({
+         iconUrl: "{% static 'map/images/Coal_India_Logo.png' %}",
+         iconSize:     [40, 40], // size of the icon
+         //shadowSize:   [50, 64], // size of the shadow
+         iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+         // shadowAnchor: [4, 62],  // the same for the shadow
+         popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+     });
+
+   var coalGroup = L.layerGroup();
+</script>
+  
+{% for i in coal %}
+
+<script>
+   //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
+
+ var table1 = 
+      
+      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+        <tbody>
+      
+        {% if i.name %}
+        <tr>
+            <th><b>Project name</b></th>
+            <th><b>{{ i.name}}</b></th>
+        </tr>
+        {% endif %}
+        
+        {% if i.implementing_agency %}
+        <tr>
+          <td>Implementing Agency</td>
+          <td>{{ i.implementing_agency}}</td>
+        </tr>
+        {% endif %}
+
+        {% if i.tot_project_outlay %}
+        <tr>
+          <td>Total Project Outlay</td>
+          <td>{{ i.tot_project_outlay }}</td>
+        </tr>
+        {% endif %}
+        
+        {% if i.project_Status %}
+        <tr>
+          <td>Project Status</td>
+          <td>{{ i.project_status }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td><a href="#"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
+          <td><a href="#"><img src="../static/map/images/icons8-image-48.png"/></a></td>
+          <td><a href="#"><img src="../static/map/images/icons8-microsoft-excel-48.png"/></a></td>
+        </tr>  
+      </tbody>
+ </table>
+ </br>`
+    var popupOptions =
+     {
+       'maxWidth': '500',
+       'className' : 'another-popup' // classname for another popup
+     }
+     var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon}).addTo(mymap).bindPopup(table1, popupOptions);
+     coalGroup.addLayer(marker);
+     // Added  hover to open popups
+    //  marker.on('mouseover', function (e) {
+    //        this.openPopup(e.latlng);
+    //    });
+    //  marker.on('mouseout', function (e) {
+    //        this.openPopup(e.latlng);
+    //  });
+     marker.on('click', function (e) {
+           this.openPopup(e.latlng);
+     });
+
+     mymap.on ({
+         click: function() {
+             isClicked = false
+         },
+         popupclose: function () {
+             isClicked = false
+         }
+     })
+ </script>
+{% endfor %}
+
+
+
+
+
+
+<script>
+  //poshan
+  var logo = L.icon({
+         iconUrl: "{% static 'map/images/logo_3.png' %}",
+         iconSize:     [40, 40], // size of the icon
+         //shadowSize:   [50, 64], // size of the shadow
+         iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+         // shadowAnchor: [4, 62],  // the same for the shadow
+         popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+     });
+
+  var poshanlayerGroup3 = L.layerGroup();
+</script>
+
+{% for i in vatikas2 %}
+ 
+   <script>
+      //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
+
+    var table3 = 
+         
+         `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+           <tbody>
+         {% if i.picture %}
+           <tr>
+             <tr><img src={{ i.picture.url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/>
+           </tr>
+           {% endif %}
+ 
+           {% if i.organization %}
+           <tr>
+               <th>Organization name</th>
+               <th>{{ i.organization}}</th>
+           </tr>
+           {% endif %}
+           
+           {% if i.district %}
+           <tr>
+             <td>District</td>
+             <td>{{ i.district}}</td>
+           </tr>
+           {% endif %}
+ 
+           {% if i.village %}
+           <tr>
+             <td>Village</td>
+             <td>{{ i.village }}</td>
+           </tr>
+           {% endif %}
+         </tbody>
+    </table>
+    </br>`
+       var popupOptions =
+        {
+          'maxWidth': '500',
+          'className' : 'another-popup' // classname for another popup
+        }
+        var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:logo}).addTo(mymap).bindPopup(table3, popupOptions);
+        poshanlayerGroup3.addLayer(marker);
+        // Added  hover to open popups
+        marker.on('mouseover', function (e) {
+              this.openPopup(e.latlng);
+          });
+        marker.on('mouseout', function (e) {
+              this.openPopup(e.latlng);
+        });
+        marker.on('click', function (e) {
+              this.openPopup(e.latlng);
+        });
+
+        mymap.on ({
+            click: function() {
+                isClicked = false
+            },
+            popupclose: function () {
+                isClicked = false
+            }
+        })
+    </script>
+{% endfor %}
+
+<script>
+  //poshan - myposhanvatikas
+  var pvIcon1 = L.icon({
+          iconUrl: "{% static 'map/images/pw_logo.png' %}",
+          iconSize:     [40, 40], // size of the icon
+          //shadowSize:   [50, 64], // size of the shadow
+          iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+          // shadowAnchor: [4, 62],  // the same for the shadow
+          popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+      });
+  var icon1a = L.icon({
+      iconUrl: "{% static 'map/images/pw_logo1a.png' %}",
+      iconSize:     [40, 40], // size of the icon
+      //shadowSize:   [50, 64], // size of the shadow
+      iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+      // shadowAnchor: [4, 62],  // the same for the shadow
+      popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+  });
+  var icon1b = L.icon({
+      iconUrl: "{% static 'map/images/pw_logo1b.png' %}",
+      iconSize:     [40, 40], // size of the icon
+      //shadowSize:   [50, 64], // size of the shadow
+      iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+      // shadowAnchor: [4, 62],  // the same for the shadow
+      popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+  });
+  var icon1c = L.icon({
+      iconUrl: "{% static 'map/images/pw_logo1c.png' %}",
+      iconSize:     [40, 40], // size of the icon
+      //shadowSize:   [50, 64], // size of the shadow
+      iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+      // shadowAnchor: [4, 62],  // the same for the shadow
+      popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+  });
+  var icon2a = L.icon({
+    iconUrl:  "{% static 'map/images/pw_logo2a.png' %}",
+    iconSize:     [40, 40], // size of the icon
+    //shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+    // shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+  });
+  var icon2b = L.icon({
+    iconUrl:  "{% static 'map/images/pw_logo2b.png' %}",
+    iconSize:     [40, 40], // size of the icon
+    //shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+    // shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+  });
+  
+  var icon2c = L.icon({
+    iconUrl:  "{% static 'map/images/pw_logo2c.png' %}",
+    iconSize:     [40, 40], // size of the icon
+    //shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+    // shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+  });
+      
+
+    var poshanlayerGroup1 = L.layerGroup();
+
+</script>
+  <style>
+  .another-popup .leaflet-popup-content-wrapper .leaflet-popup-content{
+      width: 400px;
+      height:auto;
+    }
+
+  </style>
+  
+{% for i in vatikas1 %}
+<script>
+  var table2 = 
+    
+    `<table class="table table-bordered table-striped mb-0" id="popup" style="font-size:12px; align:center;" >
+      <tbody>
+          
+      {% if i.organization_name %}
+      <tr>
+          <th>Organization name</th>
+          <th>{{ i.organization_name }}</th>
+      </tr>
+      
+      {% endif %}
+      
+      
+      {% if i.district_village_taluka_name %}
+      <tr>
+        <td>District/Village</td>
+        <td>{{ i.district_village_taluka_name }}</td>
+      </tr>
+      {% endif %}
+
+        
+      {% if i.type_of_nutri %}
+      <tr>
+        <td>Type of Nutrigarden</td>
+        <td>{{ i.type_of_nutri }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.area_nutri_garden %}
+      <tr>
+        <td>Area of Nutrigarden</td>
+        <td>{{ i.area_nutri_garden }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.level_nutri_garden %}
+      <tr>
+        <td>Level of Nutrigarden</td>
+        <td>{{ i.level_nutri_garden }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.nutri_garden_scale %}
+      <tr>
+        <td>Scale of Nutrigarden</td>
+        <td>{{ i.nutri_garden_scale }}</td>
+      </tr>
+      {% endif %}
+
+
+      {% if i.seasonal_veg_name %}
+      <tr>
+        <td>Seasonal Vegetable</td>
+        <td>{{ i.seasonal_veg_name }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.perennial_veg_name %}
+      <tr>
+        <td>Perennial Vegetable</td>
+        <td>{{ i.perennial_veg_name }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.fruits_name %}
+      <tr>
+        <td>Fruits Name</td>
+        <td>{{ i.fruits_name }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.month_earnings %}
+      <tr>
+        <td>Monthly Earnings</td>
+        <td>{{ i.month_earnings }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  </br>
+
+  {% if i.level_nutri_garden == "selling_surplus" and i.nutri_garden_scale == "backyard_poultry" %}`
+     var iconvar = icon2b;
+  `{% elif i.level_nutri_garden == "for_self_consumption" and i.nutri_garden_scale == "only_for_vegetables_and_fruits backyard_poultry" %}`
+      var iconvar = icon1b;
+  `{% elif i.level_nutri_garden == "for_self_consumption selling_surplus" and i.nutri_garden_scale == "only_for_vegetables_and_fruits backyard_poultry backyard_fishery other" %}`
+     var iconvar = icon1c;
+  `{% else %}`
+     var iconvar = pvIcon1;
+  `{% endif %}`
+  // var iconvar = pvIcon1;
+ 
+  var popupOptions =
+  {
+    'maxWidth': '500',
+    'className' : 'another-popup' // classname for another popup
+  }
+  var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconvar}).addTo(mymap).bindPopup(table2, popupOptions);
+  // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconvar}).addTo(mymap);
+  poshanlayerGroup1.addLayer(marker);
+  
+// Added  hover to open popups
+  marker.on('mouseover', function (e) {
+        this.openPopup(e.latlng);
+    });
+  marker.on('mouseout', function (e) {
+        this.openPopup(e.latlng);
+  });
+  marker.on('click', function (e) {
+        this.openPopup(e.latlng);
+  });
+
+  mymap.on ({
+      click: function() {
+          isClicked = false
+      },
+      popupclose: function () {
+          isClicked = false
+      }
+  })
+
+//hover end
+  </script>
+{% endfor %}
+      
+<script>
+  var selfconvatikaslayerGroup = L.layerGroup();
+</script>
+{% for i in selfcons %}
+<script>
+var table = 
+        
+        `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+          <tbody>
+           
+            {% if i.organization_name %}
+         <tr>
+          <th>Organization name</th>
+          <th>{{ i.organization_name }}</th>
+          </tr>
+      
+      {% endif %}      
+      
+      {% if i.district_village_taluka_name %}
+      <tr>
+        <td>District/Village</td>
+        <td>{{ i.district_village_taluka_name }}</td>
+      </tr>
+      {% endif %}
+
+        
+      {% if i.type_of_nutri %}
+      <tr>
+        <td>Type of Nutrigarden</td>
+        <td>{{ i.type_of_nutri }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.area_nutri_garden %}
+      <tr>
+        <td>Area of Nutrigarden</td>
+        <td>{{ i.area_nutri_garden }}</td>
+      </tr>
+      {% endif %}
+
+      
+    </tbody>
+  </table>
+
+      </br>`
+      var popupOptions =
+    {
+      'maxWidth': '500',
+      'className' : 'another-popup' // classname for another popup
+    }
+       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:icon2c}).bindPopup(table, popupOptions);
+       selfconvatikaslayerGroup.addLayer(marker);
+</script>
+{% endfor %}
+
+<script>
+  var sellsurpluslayerGroup = L.layerGroup();
+</script>
+{% for i in sellsurp %}
+<script>
+var table = 
+        
+        `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+          <tbody>
+            {% if i.organization_name %}
+         <tr>
+          <th>Organization name</th>
+          <th>{{ i.organization_name }}</th>
+          </tr>
+      
+      {% endif %}      
+      
+      {% if i.district_village_taluka_name %}
+      <tr>
+        <td>District/Village</td>
+        <td>{{ i.district_village_taluka_name }}</td>
+      </tr>
+      {% endif %}
+
+        
+      {% if i.type_of_nutri %}
+      <tr>
+        <td>Type of Nutrigarden</td>
+        <td>{{ i.type_of_nutri }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.area_nutri_garden %}
+      <tr>
+        <td>Area of Nutrigarden</td>
+        <td>{{ i.area_nutri_garden }}</td>
+      </tr>
+      {% endif %}
+
+      
+    </tbody>
+  </table>
+
+      </br>`
+      var popupOptions =
+    {
+      'maxWidth': '500',
+      'className' : 'another-popup' // classname for another popup
+    }
+       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon}).bindPopup(table, popupOptions);
+       sellsurpluslayerGroup.addLayer(marker);
+   </script>
+{% endfor %}
+
+
+<script>
+  
+  var overlays = {
+        //"States":indiaState,
+        "Districts":indiaDistrict,
+        "Maharashtra Highways":mahaHighways,
+        "Maharashtra Schools":mahaSchools,
+        "Coal India Projects":coalGroup
+	};
+
+	L.control.layers(baseLayers, overlays).addTo(mymap);
+  //L.control.layers(overlays).addTo(mymap);
+
+document.addEventListener('DOMContentLoaded', () => {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {opacity:.3});
+});
+
+</script>
+{% endblock map%}

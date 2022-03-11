@@ -1,0 +1,150 @@
+/* colours */
+
+
+  /* recipe styles */
+
+   #form{
+      width:40%;
+    }
+    #form label{
+      color: black;
+      font-size: 18px;
+    }
+  
+  .recipes{
+    margin-top: 20px;
+  }
+  
+  .card-panel.recipe{
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0px 1px 3px rgba(90,90,90,0.1);
+    display: grid;
+    grid-template-columns: 2fr 6fr 1fr;
+    grid-template-areas: "image details delete";
+    position: relative;
+  }
+  .recipe img{
+    grid-area: image;
+    max-width: 60px;
+  }
+  .recipe-details{
+    grid-area: details;
+    margin-top: 6px;
+  }
+  .recipe-delete{
+    grid-area: delete;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+  }
+  .recipe-delete i{
+    font-size: 18px;
+  }
+  .recipe-title{
+    font-weight: bold;
+  }
+  .recipe-ingredients{
+    font-size: 0.8em;
+  }
+  
+  /* form-styles */
+  .add-btn{
+    background: var(--title) !important;
+  }
+  .close-btn{
+    background: var(--title) !important;
+  }
+  .login-btn{
+    background: var(--title) !important;
+  }
+  input{
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+  .side-form{
+    z-index: 1001;
+    position: fixed;
+    width: 100%;
+    min-height: 100vh -56px;
+    overflow-y: scroll;
+    bottom: 0;
+    top: 56px;
+    text-align: center;
+    display: none;
+    background-color: white;
+  }
+  .side-form button {
+    background: var(--title);
+    box-shadow: 1px 1px 3px rgba(90,90,90,0.2);
+  }
+  form .input-field{
+    margin-top: 30px;
+  }
+
+  #location-btn {
+    background: var(--title);
+    box-shadow: 1px 1px 3px rgba(90,90,90,0.2);
+  }
+
+  #capture-btn{
+    background: var(--title);
+    box-shadow: 1px 1px 3px rgba(90,90,90,0.2);
+  }
+
+  .main-image {
+    max-width: 70%;
+    max-height: 50%;
+    /* width: 800; */
+    /* height: 550; */
+    margin: auto;
+    display: block;
+  }
+
+  .msg-box{
+    margin: 10px;
+    display: block;
+    text-align: center;
+  }
+
+  #side-form video,#side-form canvas{
+    width: 512px;
+    max-width: 100%;
+    display: none;
+    margin: auto;
+  }
+
+  #side-form #pick-image, #side-form #location-loader{
+    display: none;
+  }
+
+  #side-form #capture-btn{
+    margin: 10px auto;
+  }
+
+  #location-loader{
+    margin: auto;
+  }
+
+
+  .image-options{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    vertical-align: center;
+  }
+
+  .camera-div{
+   width: 50%;
+  }
+
+  .upload-div{
+    width: 50%;
+  }
+
+  p> label{
+    float:left;
+  }

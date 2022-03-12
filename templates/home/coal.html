@@ -1,0 +1,472 @@
+{% extends 'home/base.html' %} 
+{% load static %} 
+{% block content %}
+
+<style>
+select{display: block;padding: 0px;} 
+
+</style>
+    <form  method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+    <div class="container">
+	<div class="row">
+	<div class="section"></div>
+   <main>
+     <div class="container">
+    <div  class="z-depth-3 y-depth-3 x-depth-3 grey  lighten-4 row" style="padding:20px;border: 1px;">
+        
+        
+          <h3 class="heading" style="text-align: center;"><b>Coal India</b></h3>
+      
+          {% comment %} <div class='row' >
+             
+            <div class='input-field col s12'>
+              <span style="float: left; color: black; height: 3rem;">Location of Nutri-garden/ Poshan Vatika</span>
+              <select name = "nutrigardenlocation">
+                <option value="" selected>Choose Your Option</option>
+                <option value="Anganwadi Centre">Anganwadi Centre</option>
+                <option value="Household">Household (ICDS beneficiary)</option>
+                <option value="Community">Community</option>
+                <option value="School">School</option>
+                <option value="Others">Others</option>
+              </select>
+              </div>
+           
+          </div> {% endcomment %}
+          <div class='row' >
+            <div class='input-field col s12'>
+              <span style="float: left; color: black;">Name of Project </span>
+              <input type="text" class="fieldlabels" placeholder="Project Name" name="project_name" id="project_name" required> 
+            </div> 
+          </div>
+          <div class='row' >
+            <div class='input-field col s12'>
+              <span style="float: left; color: black; height: 3rem;">State</span>
+              <select name = "inputState" id="inputState">
+                <option value="SelectState" selected>Choose Your Option</option>
+                <option value="Andra Pradesh">Andra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Madya Pradesh">Madya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Orissa">Orissa</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttaranchal">Uttaranchal</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="West Bengal">West Bengal</option>
+                <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
+                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                <option value="Daman and Diu">Daman and Diu</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Lakshadeep">Lakshadeep</option>
+                <option value="Pondicherry">Pondicherry</option>
+              </select>
+              </div>
+            </div>
+             
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black; height: 3rem;">District</span>
+                <select name = "inputDistrict" id="inputDistrict">
+                  <option value="" selected>Choose Your Option</option>
+                  {% comment %} <option value="completed">-- select one --</option>   {% endcomment %}
+                </select>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black; height: 3rem;">FY</span>
+                <select name = "fy" id="fy">
+                  <option value="" selected>Choose Your Option</option>
+                  <option value="all">All</option>
+                  <option value="2014-15 to 2021-22"> 2014-15 to 2021-22</option>
+                </select>
+                </div></div>
+
+
+                <div class='row' >
+                  <div class='input-field col s12'>
+                    <span style="float: left; color: black; height: 3rem;">Project Status</span>
+                    <select name = "Projectstatus" id="Projectstatus">
+                      <option value="" selected>Choose Your Option</option>
+                      <option value="completed">Completed</option>
+                      <option value="in_progress">In-progress</option>
+                      
+                    </select>
+                    </div></div>
+
+              <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black; height: 3rem;">Type of Implementing Agency</span>
+                <select name = "agencytype" id="agencytype">
+                  <option value="" selected>Choose Your Option</option>
+                  <option value="self">Self</option>
+                  <option value="govt">Government</option>
+                  <option value="ngo">NGO</option>
+                </select>
+                </div>
+                </div>
+                <div class='row' >
+                  <div class='input-field col s12'>
+                    <span style="float: left; color: black;">Name of Organisation </span>
+                    <input type="text" class="fieldlabels" placeholder="Organisation Name" name="organisation_name" id="organisation_name" required> 
+                  </div> 
+                </div>
+                <div class='row' >
+                  <div class='input-field col s12'>
+                    <span style="float: left; color: black;">Date of Receipt of Tender</span>
+                    <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="tender_receipt" id="tender_receipt" value="" required> 
+                  </div> 
+                </div>
+                <div class='row' >
+                  <div class='input-field col s12'>
+                    <span style="float: left; color: black; height: 3rem;">Name of Sector</span>
+                    <select name = "sector" id="sector">
+                      <option value="" selected>Choose Your Option</option>
+                      <option value="raised bed">All</option>
+                      <option value="circular bed">Education</option>
+                      <option value="container cultivation">Healthcare</option>
+                    </select>
+                    </div>
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Requested Amount</span>
+                      <input type="number" class="fieldlabels" placeholder="Requested Amount" name="request_amount" id="request_amount" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Approved Amount</span>
+                      <input type="number" class="fieldlabels" placeholder="Approved Amount" name="approved_amount" id="approved_amount" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date for Security Completion</span>
+                      <input type="date" class="fieldlabels" placeholder="yyyy-mm-dd" name="security_completion" id="security_completion" value=""required > 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date for Submission for GMCSR Sign-Off</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="submission" id="submission" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date for Receipt of GMCSR Sign-Off</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="receipt" id="receipt" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date for Agenda Completion</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="agenda_completion" id="agenda_completion" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of CSR Committee Review</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="committee_review" id="committee_review" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of GM-CSR Sign-Off</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="gm_csr_sign_off" id="gm_csr_sign_off" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Receipt after Vetting by DP</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="vetting_by_dp" id="vetting_by_dp" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Receipt after Vetting by DF</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="vetting_by_df" id="vetting_by_df" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Chairman Approval</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="chairman_approval" id="chairman_approval" value="" required>   
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of CSR and SD Committee Review</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="csr_sd_committee_review" id="csr_sd_committee_review" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of CIL Board Review</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="cil_board_review" id="cil_board_review" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Completion of FCBC</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="fcbc_completion" id="fcbc_completion" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of MoU Finalisation</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="mou_finalisation" id="mou_finalisation" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of GM-CSR Sign-Off</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="gm_csr_sign_off" id="gm_csr_sign_off" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Completion of Legal Scrutiny</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="legal_security" id="legal_security" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Office Order Creation</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="office_orfder_creation" id="office_orfder_creation" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Finance Sign-off</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="finance" id="finance" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Fund Disbursal</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="fund_disbursal" id="fund_disbursal" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Ist Release Acknowledgement</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="first_release_ack" id="first_release_ack" value="" required> 
+                    </div> 
+                  </div>
+                  <div class='row' >
+                    <div class='input-field col s12'>
+                      <span style="float: left; color: black;">Date of Final Release Acknowledgement</span>
+                      <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="final_release_ack" id="final_release_ack" value="" required> 
+                    </div> 
+                  </div>
+            {% comment %} <br/> {% endcomment %}
+            <div class="form-field" style="margin-bottom: 10px ;text-align:center;">
+              <button class="login-btn btn-large waves-effect waves-dark">Submit</button>
+          </div>
+                </div>
+     
+        </div>
+       </div>
+      </main>
+
+  
+	    </div>
+    </div>
+    </form>
+    {% comment %} <script type="text/javascript" src="{% static 'home/js/coal.js' %}"></script> {% endcomment %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous">
+
+    </script>
+
+    <script>
+      var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];
+      var ArunachalPradesh = ["Anjaw","Changlang","Dibang Valley","East Kameng","East Siang","Kra Daadi","Kurung Kumey","Lohit","Longding","Lower Dibang Valley","Lower Subansiri","Namsai","Papum Pare","Siang","Tawang","Tirap","Upper Siang","Upper Subansiri","West Kameng","West Siang","Itanagar"];
+      var Assam = ["Baksa","Barpeta","Biswanath","Bongaigaon","Cachar","Charaideo","Chirang","Darrang","Dhemaji","Dhubri","Dibrugarh","Goalpara","Golaghat","Hailakandi","Hojai","Jorhat","Kamrup Metropolitan","Kamrup (Rural)","Karbi Anglong","Karimganj","Kokrajhar","Lakhimpur","Majuli","Morigaon","Nagaon","Nalbari","Dima Hasao","Sivasagar","Sonitpur","South Salmara Mankachar","Tinsukia","Udalguri","West Karbi Anglong"];
+      var Bihar = ["Araria","Arwal","Aurangabad","Banka","Begusarai","Bhagalpur","Bhojpur","Buxar","Darbhanga","East Champaran","Gaya","Gopalganj","Jamui","Jehanabad","Kaimur","Katihar","Khagaria","Kishanganj","Lakhisarai","Madhepura","Madhubani","Munger","Muzaffarpur","Nalanda","Nawada","Patna","Purnia","Rohtas","Saharsa","Samastipur","Saran","Sheikhpura","Sheohar","Sitamarhi","Siwan","Supaul","Vaishali","West Champaran"];
+      var Chhattisgarh = ["Balod","Baloda Bazar","Balrampur","Bastar","Bemetara","Bijapur","Bilaspur","Dantewada","Dhamtari","Durg","Gariaband","Janjgir Champa","Jashpur","Kabirdham","Kanker","Kondagaon","Korba","Koriya","Mahasamund","Mungeli","Narayanpur","Raigarh","Raipur","Rajnandgaon","Sukma","Surajpur","Surguja"];
+      var Goa = ["North Goa","South Goa"];
+      var Gujarat = ["Ahmedabad","Amreli","Anand","Aravalli","Banaskantha","Bharuch","Bhavnagar","Botad","Chhota Udaipur","Dahod","Dang","Devbhoomi Dwarka","Gandhinagar","Gir Somnath","Jamnagar","Junagadh","Kheda","Kutch","Mahisagar","Mehsana","Morbi","Narmada","Navsari","Panchmahal","Patan","Porbandar","Rajkot","Sabarkantha","Surat","Surendranagar","Tapi","Vadodara","Valsad"];
+      var Haryana = ["Ambala","Bhiwani","Charkhi Dadri","Faridabad","Fatehabad","Gurugram","Hisar","Jhajjar","Jind","Kaithal","Karnal","Kurukshetra","Mahendragarh","Mewat","Palwal","Panchkula","Panipat","Rewari","Rohtak","Sirsa","Sonipat","Yamunanagar"];
+      var HimachalPradesh = ["Bilaspur","Chamba","Hamirpur","Kangra","Kinnaur","Kullu","Lahaul Spiti","Mandi","Shimla","Sirmaur","Solan","Una"];
+      var JammuKashmir = ["Anantnag","Bandipora","Baramulla","Budgam","Doda","Ganderbal","Jammu","Kargil","Kathua","Kishtwar","Kulgam","Kupwara","Leh","Poonch","Pulwama","Rajouri","Ramban","Reasi","Samba","Shopian","Srinagar","Udhampur"];
+      var Jharkhand = ["Bokaro","Chatra","Deoghar","Dhanbad","Dumka","East Singhbhum","Garhwa","Giridih","Godda","Gumla","Hazaribagh","Jamtara","Khunti","Koderma","Latehar","Lohardaga","Pakur","Palamu","Ramgarh","Ranchi","Sahebganj","Seraikela Kharsawan","Simdega","West Singhbhum"];
+      var Karnataka = ["Bagalkot","Bangalore Rural","Bangalore Urban","Belgaum","Bellary","Bidar","Vijayapura","Chamarajanagar","Chikkaballapur","Chikkamagaluru","Chitradurga","Dakshina Kannada","Davanagere","Dharwad","Gadag","Gulbarga","Hassan","Haveri","Kodagu","Kolar","Koppal","Mandya","Mysore","Raichur","Ramanagara","Shimoga","Tumkur","Udupi","Uttara Kannada","Yadgir"];
+      var Kerala = ["Alappuzha","Ernakulam","Idukki","Kannur","Kasaragod","Kollam","Kottayam","Kozhikode","Malappuram","Palakkad","Pathanamthitta","Thiruvananthapuram","Thrissur","Wayanad"];
+      var MadhyaPradesh = ["Agar Malwa","Alirajpur","Anuppur","Ashoknagar","Balaghat","Barwani","Betul","Bhind","Bhopal","Burhanpur","Chhatarpur","Chhindwara","Damoh","Datia","Dewas","Dhar","Dindori","Guna","Gwalior","Harda","Hoshangabad","Indore","Jabalpur","Jhabua","Katni","Khandwa","Khargone","Mandla","Mandsaur","Morena","Narsinghpur","Neemuch","Panna","Raisen","Rajgarh","Ratlam","Rewa","Sagar","Satna",
+      "Sehore","Seoni","Shahdol","Shajapur","Sheopur","Shivpuri","Sidhi","Singrauli","Tikamgarh","Ujjain","Umaria","Vidisha"];
+      var Maharashtra = ["Ahmednagar","Akola","Amravati","Aurangabad","Beed","Bhandara","Buldhana","Chandrapur","Dhule","Gadchiroli","Gondia","Hingoli","Jalgaon","Jalna","Kolhapur","Latur","Mumbai City","Mumbai Suburban","Nagpur","Nanded","Nandurbar","Nashik","Osmanabad","Palghar","Parbhani","Pune","Raigad","Ratnagiri","Sangli","Satara","Sindhudurg","Solapur","Thane","Wardha","Washim","Yavatmal"];
+      var Manipur = ["Bishnupur","Chandel","Churachandpur","Imphal East","Imphal West","Jiribam","Kakching","Kamjong","Kangpokpi","Noney","Pherzawl","Senapati","Tamenglong","Tengnoupal","Thoubal","Ukhrul"];
+      var Meghalaya = ["East Garo Hills","East Jaintia Hills","East Khasi Hills","North Garo Hills","Ri Bhoi","South Garo Hills","South West Garo Hills","South West Khasi Hills","West Garo Hills","West Jaintia Hills","West Khasi Hills"];
+      var Mizoram = ["Aizawl","Champhai","Kolasib","Lawngtlai","Lunglei","Mamit","Saiha","Serchhip","Aizawl","Champhai","Kolasib","Lawngtlai","Lunglei","Mamit","Saiha","Serchhip"];
+      var Nagaland = ["Dimapur","Kiphire","Kohima","Longleng","Mokokchung","Mon","Peren","Phek","Tuensang","Wokha","Zunheboto"];
+      var Odisha = ["Angul","Balangir","Balasore","Bargarh","Bhadrak","Boudh","Cuttack","Debagarh","Dhenkanal","Gajapati","Ganjam","Jagatsinghpur","Jajpur","Jharsuguda","Kalahandi","Kandhamal","Kendrapara","Kendujhar","Khordha","Koraput","Malkangiri","Mayurbhanj","Nabarangpur","Nayagarh","Nuapada","Puri","Rayagada","Sambalpur","Subarnapur","Sundergarh"];
+      var Punjab = ["Amritsar","Barnala","Bathinda","Faridkot","Fatehgarh Sahib","Fazilka","Firozpur","Gurdaspur","Hoshiarpur","Jalandhar","Kapurthala","Ludhiana","Mansa","Moga","Mohali","Muktsar","Pathankot","Patiala","Rupnagar","Sangrur","Shaheed Bhagat Singh Nagar","Tarn Taran"];
+      var Rajasthan = ["Ajmer","Alwar","Banswara","Baran","Barmer","Bharatpur","Bhilwara","Bikaner","Bundi","Chittorgarh","Churu","Dausa","Dholpur","Dungarpur","Ganganagar","Hanumangarh","Jaipur","Jaisalmer","Jalore","Jhalawar","Jhunjhunu","Jodhpur","Karauli","Kota","Nagaur","Pali","Pratapgarh","Rajsamand","Sawai Madhopur","Sikar","Sirohi","Tonk","Udaipur"];
+      var Sikkim = ["East Sikkim","North Sikkim","South Sikkim","West Sikkim"];
+      var TamilNadu = ["Ariyalur","Chennai","Coimbatore","Cuddalore","Dharmapuri","Dindigul","Erode","Kanchipuram","Kanyakumari","Karur","Krishnagiri","Madurai","Nagapattinam","Namakkal","Nilgiris","Perambalur","Pudukkottai","Ramanathapuram","Salem","Sivaganga","Thanjavur","Theni","Thoothukudi","Tiruchirappalli","Tirunelveli","Tiruppur","Tiruvallur","Tiruvannamalai","Tiruvarur","Vellore","Viluppuram","Virudhunagar"];
+      var Telangana = ["Adilabad","Bhadradri Kothagudem","Hyderabad","Jagtial","Jangaon","Jayashankar","Jogulamba","Kamareddy","Karimnagar","Khammam","Komaram Bheem","Mahabubabad","Mahbubnagar","Mancherial","Medak","Medchal","Nagarkurnool","Nalgonda","Nirmal","Nizamabad","Peddapalli","Rajanna Sircilla","Ranga Reddy","Sangareddy","Siddipet","Suryapet","Vikarabad","Wanaparthy","Warangal Rural","Warangal Urban","Yadadri Bhuvanagiri"];
+      var Tripura = ["Dhalai","Gomati","Khowai","North Tripura","Sepahijala","South Tripura","Unakoti","West Tripura"];
+      var UttarPradesh = ["Agra","Aligarh","Allahabad","Ambedkar Nagar","Amethi","Amroha","Auraiya","Azamgarh","Baghpat","Bahraich","Ballia","Balrampur","Banda","Barabanki","Bareilly","Basti","Bhadohi","Bijnor","Budaun","Bulandshahr","Chandauli","Chitrakoot","Deoria","Etah","Etawah","Faizabad","Farrukhabad","Fatehpur","Firozabad","Gautam Buddha Nagar","Ghaziabad","Ghazipur","Gonda","Gorakhpur","Hamirpur","Hapur","Hardoi","Hathras","Jalaun","Jaunpur","Jhansi","Kannauj","Kanpur Dehat","Kanpur Nagar","Kasganj","Kaushambi","Kheri","Kushinagar","Lalitpur","Lucknow","Maharajganj","Mahoba","Mainpuri","Mathura","Mau","Meerut","Mirzapur","Moradabad","Muzaffarnagar","Pilibhit","Pratapgarh","Raebareli","Rampur","Saharanpur","Sambhal","Sant Kabir Nagar","Shahjahanpur","Shamli","Shravasti","Siddharthnagar","Sitapur","Sonbhadra","Sultanpur","Unnao","Varanasi"];
+      var Uttarakhand  = ["Almora","Bageshwar","Chamoli","Champawat","Dehradun","Haridwar","Nainital","Pauri","Pithoragarh","Rudraprayag","Tehri","Udham Singh Nagar","Uttarkashi"];
+      var WestBengal = ["Alipurduar","Bankura","Birbhum","Cooch Behar","Dakshin Dinajpur","Darjeeling","Hooghly","Howrah","Jalpaiguri","Jhargram","Kalimpong","Kolkata","Malda","Murshidabad","Nadia","North 24 Parganas","Paschim Bardhaman","Paschim Medinipur","Purba Bardhaman","Purba Medinipur","Purulia","South 24 Parganas","Uttar Dinajpur"];
+      var AndamanNicobar = ["Nicobar","North Middle Andaman","South Andaman"];
+      var Chandigarh = ["Chandigarh"];
+      var DadraHaveli = ["Dadra Nagar Haveli"];
+      var DamanDiu = ["Daman","Diu"];
+      var Delhi = ["Central Delhi","East Delhi","New Delhi","North Delhi","North East Delhi","North West Delhi","Shahdara","South Delhi","South East Delhi","South West Delhi","West Delhi"];
+      var Lakshadweep = ["Lakshadweep"];
+      var Puducherry = ["Karaikal","Mahe","Puducherry","Yanam"];
+      $("#inputState").change(function(){
+        var StateSelected = $(this).val();
+        var optionsList;
+        var htmlString = "";
+      
+        switch (StateSelected) {
+          case "Andra Pradesh":
+              optionsList = AndraPradesh;
+              break;
+          case "Arunachal Pradesh":
+              optionsList = ArunachalPradesh;
+              break;
+          case "Assam":
+              optionsList = Assam;
+              break;
+          case "Bihar":
+              optionsList = Bihar;
+              break;
+          case "Chhattisgarh":
+              optionsList = Chhattisgarh;
+              break;
+          case "Goa":
+              optionsList = Goa;
+              break;
+          case  "Gujarat":
+              optionsList = Gujarat;
+              break;
+          case "Haryana":
+              optionsList = Haryana;
+              break;
+          case "Himachal Pradesh":
+              optionsList = HimachalPradesh;
+              break;
+          case "Jammu and Kashmir":
+              optionsList = JammuKashmir;
+              break;
+          case "Jharkhand":
+              optionsList = Jharkhand;
+              break;
+          case  "Karnataka":
+              optionsList = Karnataka;
+              break;
+          case "Kerala":
+              optionsList = Kerala;
+              break;
+          case  "Madya Pradesh":
+              optionsList = MadhyaPradesh;
+              break;
+          case "Maharashtra":
+              optionsList = Maharashtra;
+              break;
+          case  "Manipur":
+              optionsList = Manipur;
+              break;
+          case "Meghalaya":
+              optionsList = Meghalaya ;
+              break;
+          case  "Mizoram":
+              optionsList = Mizoram;
+              break;
+          case "Nagaland":
+              optionsList = Nagaland;
+              break;
+          case  "Orissa":
+              optionsList = Orissa;
+              break;
+          case "Punjab":
+              optionsList = Punjab;
+              break;
+          case  "Rajasthan":
+              optionsList = Rajasthan;
+              break;
+          case "Sikkim":
+              optionsList = Sikkim;
+              break;
+          case  "Tamil Nadu":
+              optionsList = TamilNadu;
+              break;
+          case  "Telangana":
+              optionsList = Telangana;
+              break;
+          case "Tripura":
+              optionsList = Tripura ;
+              break;
+          case  "Uttaranchal":
+              optionsList = Uttaranchal;
+              break;
+          case  "Uttar Pradesh":
+              optionsList = UttarPradesh;
+              break;
+          case "West Bengal":
+              optionsList = WestBengal;
+              break;
+          case  "Andaman and Nicobar Islands":
+              optionsList = AndamanNicobar;
+              break;
+          case "Chandigarh":
+              optionsList = Chandigarh;
+              break;
+          case  "Dadar and Nagar Haveli":
+              optionsList = DadraHaveli;
+              break;
+          case "Daman and Diu":
+              optionsList = DamanDiu;
+              break;
+          case  "Delhi":
+              optionsList = Delhi;
+              break;
+          case "Lakshadeep":
+              optionsList = Lakshadeep ;
+              break;
+          case  "Pondicherry":
+              optionsList = Pondicherry;
+              break;
+      }
+      
+      
+        for(var i = 0; i < optionsList.length; i++){
+          htmlString = htmlString+"<option value='"+ optionsList[i] +"'>"+ optionsList[i] +"</option>";
+        }
+        $("#inputDistrict").html(htmlString);
+      
+      });
+    </script>
+{% endblock %}

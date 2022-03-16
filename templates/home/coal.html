@@ -6,6 +6,20 @@
 select{display: block;padding: 0px;} 
 
 </style>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+    </div>
+
+    {% endfor %}
+</ul>
+{% endif %} 
     <form  method="post" enctype="multipart/form-data">
       {% csrf_token %}
     <div class="container">
@@ -92,6 +106,18 @@ select{display: block;padding: 0px;}
                   <option value="" selected>Choose Your Option</option>
                   {% comment %} <option value="completed">-- select one --</option>   {% endcomment %}
                 </select>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Latitude</span>
+                <input placeholder="Allow location access to capture your location" id="lat" type="text" name="lat"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Longitude</span>
+                <input placeholder="Allow location access to capture your location" id="lng" type="text" name="lng"  required>
               </div>
             </div>
             <div class='row' >
@@ -282,6 +308,22 @@ select{display: block;padding: 0px;}
                       <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="final_release_ack" id="final_release_ack" value="" required> 
                     </div> 
                   </div>
+                  <div class="input-section center">
+                    <a id="location-btn" class="waves-effect waves-light btn-small" style=" background-color: #4CAF50; visibility: hidden;">Get Location</a>
+            
+                      <div class="preloader-wrapper small active" id="location-loader">
+                        <div class="spinner-layer spinner-green-only">
+                          <div class="circle-clipper left">
+                            <div class="circle"></div>
+                          </div><div class="gap-patch">
+                            <div class="circle"></div>
+                          </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                          </div>
+                        </div>
+                      </div>
+            
+                  </div>
             {% comment %} <br/> {% endcomment %}
             <div class="form-field" style="margin-bottom: 10px ;text-align:center;">
               <button class="login-btn btn-large waves-effect waves-dark">Submit</button>
@@ -296,6 +338,12 @@ select{display: block;padding: 0px;}
 	    </div>
     </div>
     </form>
+    <script>
+      window.onload = function(){
+document.getElementById('location-btn').click();
+}
+    </script>
+  </div>
     {% comment %} <script type="text/javascript" src="{% static 'home/js/coal.js' %}"></script> {% endcomment %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

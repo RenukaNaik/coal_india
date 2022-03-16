@@ -1,17 +1,18 @@
 {% extends 'home/base.html' %} 
 {% load static %} 
 {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
 select{display: block;padding: 0px;} 
 
 </style>
 {% if messages %}
-<ul class="messages">
+<ul class="messages" style="color: #4CAF50; font-size: xx-large;">
     {% for message in messages %}
 
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{message}}
+        <b>{{message}}</b>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

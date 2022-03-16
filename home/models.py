@@ -48,3 +48,5 @@ class CoalForm(models.Model):
     final_release_ack=models.DateField(blank=True, null=True)
     lat = models.CharField(max_length=255, blank=True, null=True)
     lng = models.CharField(max_length=255, blank=True, null=True)
+    def __str__(self):
+        return self.project_name

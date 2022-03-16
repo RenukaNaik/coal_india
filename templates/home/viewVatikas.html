@@ -318,6 +318,103 @@
 
 
 
+
+<script>
+  
+  var pvIcon1 = L.icon({
+         iconUrl: "{% static 'map/images/Coal_India_Logo.png' %}",
+         iconSize:     [40, 40], // size of the icon
+         //shadowSize:   [50, 64], // size of the shadow
+         iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+         // shadowAnchor: [4, 62],  // the same for the shadow
+         popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+     });
+
+   var coalGroup = L.layerGroup();
+</script>
+  
+{% for i in coalform %}
+
+<script>
+   //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
+
+ var table4 = 
+      
+      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+        <tbody>
+      
+        {% if i.project_name %}
+        <tr>
+            <th><b>Project name</b></th>
+            <th><b>{{ i.project_name}}</b></th>
+        </tr>
+        {% endif %}
+        
+        {% if i.inputState %}
+        <tr>
+          <td>State</td>
+          <td>{{ i.inputState}}</td>
+        </tr>
+        {% endif %}
+
+        {% if i.inputDistrict %}
+        <tr>
+          <td>District</td>
+          <td>{{ i.inputDistrict }}</td>
+        </tr>
+        {% endif %}
+        {% if i.agencytype %}
+        <tr>
+          <td>Implementing Agency</td>
+          <td>{{ i.agencytype}}</td>
+        </tr>
+        {% endif %}
+        
+        {% if i.ProjectStatus %}
+        <tr>
+          <td>Project Status</td>
+          <td>{{ i.ProjectStatus }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td><a href="#"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
+          <td><a href="#"><img src="../static/map/images/icons8-image-48.png"/></a></td>
+          <td><a href="#"><img src="../static/map/images/icons8-microsoft-excel-48.png"/></a></td>
+        </tr>  
+      </tbody>
+ </table>
+ </br>`
+    var popupOptions =
+     {
+       'maxWidth': '500',
+       'className' : 'another-popup' // classname for another popup
+     }
+     var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap).bindPopup(table4, popupOptions);
+     coalGroup1.addLayer(marker);
+     // Added  hover to open popups
+    //  marker.on('mouseover', function (e) {
+    //        this.openPopup(e.latlng);
+    //    });
+    //  marker.on('mouseout', function (e) {
+    //        this.openPopup(e.latlng);
+    //  });
+     marker.on('click', function (e) {
+           this.openPopup(e.latlng);
+     });
+
+     mymap.on ({
+         click: function() {
+             isClicked = false
+         },
+         popupclose: function () {
+             isClicked = false
+         }
+     })
+ </script>
+{% endfor %}
+
+
+
 <script>
   //poshan
   var logo = L.icon({
@@ -716,7 +813,8 @@ var table =
         "Districts":indiaDistrict,
         "Maharashtra Highways":mahaHighways,
         "Maharashtra Schools":mahaSchools,
-        "Coal India Projects":coalGroup
+        "Coal India Projects":coalGroup,
+        "Coal Form":coalGroup1
 	};
 
 	L.control.layers(baseLayers, overlays).addTo(mymap);

@@ -46,3 +46,5 @@ class CoalForm(models.Model):
     fund_disbursal=models.DateField(blank=True, null=True)
     first_release_ack=models.DateField(blank=True, null=True)
     final_release_ack=models.DateField(blank=True, null=True)
+    lat = models.CharField(max_length=255, blank=True, null=True)
+    lng = models.CharField(max_length=255, blank=True, null=True)

@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your views here.
 
 def coalIndia(request):
-    coal = ProjectDetails.objects.all(),
+    coal = ProjectDetails.objects.all()
     coalform=CoalForm.objects.all()
     context = {'coal':coal,'coalform':coalform}
     # context = {'wells': wells, 'mylist':mylist}
@@ -62,7 +62,7 @@ def coal(request):
         vetting_by_dp=vetting_by_dp,vetting_by_df=vetting_by_df,chairman_approval=chairman_approval,csr_sd_committee_review=csr_sd_committee_review,
         cil_board_review=cil_board_review,fcbc_completion=fcbc_completion,mou_finalisation=mou_finalisation)
         coal.save()
-        messages.info(request, _(u'Your data is saved'))
+        messages.info(request, _(u'Your data is submitted successfully!'))
         # return HttpResponseRedirect(request.path_info)
         return redirect('/coal')
            

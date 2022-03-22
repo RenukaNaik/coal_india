@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import  ProjectDetails,CoalForm
+from .models import CoalForm#, ProjectDetails,
 from django.shortcuts import redirect
 from .forms import Coalform
 from django.contrib import messages
@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your views here.
 
 def coalIndia(request):
-    coal = ProjectDetails.objects.all()
+    # coal = ProjectDetails.objects.all()
     coalform=CoalForm.objects.all()
     context = {'coal':coal,'coalform':coalform}
     # context = {'wells': wells, 'mylist':mylist}

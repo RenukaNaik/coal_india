@@ -56,6 +56,19 @@ select{display: block;padding: 0px;}
           </div>
           <div class='row' >
             <div class='input-field col s12'>
+              <span style="float: left; color: black; height: 3rem;">Name of Sector</span>
+              <select name = "sector" id="sector">
+                <option value="" selected>Choose Your Option</option>
+                <option value="all">All</option>
+                <option value="education">Education</option>
+                <option value="healthcare">Healthcare</option>
+              </select>
+              </div>
+            </div>
+
+
+          <div class='row' >
+            <div class='input-field col s12'>
               <span style="float: left; color: black; height: 3rem;">State</span>
               <select name = "inputState" id="inputState">
                 <option value="SelectState" selected>Choose Your Option</option>
@@ -121,13 +134,21 @@ select{display: block;padding: 0px;}
                 <input placeholder="Allow location access to capture your location" id="lng" type="text" name="lng"  required>
               </div>
             </div>
+            
             <div class='row' >
               <div class='input-field col s12'>
                 <span style="float: left; color: black; height: 3rem;">FY</span>
                 <select name = "fy" id="fy">
                   <option value="" selected>Choose Your Option</option>
                   <option value="all">All</option>
-                  <option value="2014-15 to 2021-22"> 2014-15 to 2021-22</option>
+                  <option value="2014-15"> 2014-15</option>
+                  <option value="2015-16"> 2015-16</option>
+                  <option value="2016-17"> 2016-17</option>
+                  <option value="2017-18"> 2017-18</option>
+                  <option value="2018-19"> 2018-19</option>
+                  <option value="2019-20"> 2019-20</option>
+                  <option value="2020-21"> 2020-21</option>
+                  <option value="2021-22"> 2021-22</option>
                 </select>
                 </div></div>
 
@@ -156,8 +177,8 @@ select{display: block;padding: 0px;}
                 </div>
                 <div class='row' >
                   <div class='input-field col s12'>
-                    <span style="float: left; color: black;">Name of Organisation </span>
-                    <input type="text" class="fieldlabels" placeholder="Organisation Name" name="organisation_name" id="organisation_name" required> 
+                    <span style="float: left; color: black;">Name of Implementing Agency </span>
+                    <input type="text" class="fieldlabels" placeholder="Name of Implementing Agency" name="organisation_name" id="organisation_name" required> 
                   </div> 
                 </div>
                 <div class='row' >
@@ -166,17 +187,7 @@ select{display: block;padding: 0px;}
                     <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="tender_receipt" id="tender_receipt" value="" required> 
                   </div> 
                 </div>
-                <div class='row' >
-                  <div class='input-field col s12'>
-                    <span style="float: left; color: black; height: 3rem;">Name of Sector</span>
-                    <select name = "sector" id="sector">
-                      <option value="" selected>Choose Your Option</option>
-                      <option value="all">All</option>
-                      <option value="education">Education</option>
-                      <option value="healthcare">Healthcare</option>
-                    </select>
-                    </div>
-                  </div>
+                
                   <div class='row' >
                     <div class='input-field col s12'>
                       <span style="float: left; color: black;">Requested Amount</span>

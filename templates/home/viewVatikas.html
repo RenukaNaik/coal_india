@@ -39,6 +39,8 @@
   
 </div> 
 <div id="map_canvas"></div>
+<!-- <input type ="button" onclick='window.open("{{ i.commpendium.url }}", "width=5,height=5,top=1,left=5", "_self")' value="Open Compendium"> -->
+
 <script>
     let isClicked = false
     var mymap = L.map('mapid').setView([19.7515-1,75.7139-1], 4.5);
@@ -308,7 +310,7 @@
         <tr>
           {% if i.commpendium %}
             <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
-            <input type ="button" onclick='window.open("{{ i.commpendium.url }}", "width=5,height=5,top=1,left=5", "_self")' value="Open Compendium">
+            
              
           {% endif %}
           {% if i.picture %}
@@ -316,7 +318,7 @@
           {% endif %}  
           {% if i.files %}
             <td><a href="{{ i.files.url }}"><img src="../static/map/images/icons8-microsoft-excel-48.png"/></a></td>
-             <input type ="button" onclick='window.open("{{ i.files.url }}")' value="Open File">
+             
             {% endif %}
           </tr>  
       </tbody>

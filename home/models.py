@@ -1,4 +1,9 @@
 from django.db import models
+from django.db.models.fields.files import ImageField
+from PIL import Image
+import sys
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 # Create your models here.
 # class ProjectDetails(models.Model):
@@ -48,5 +53,21 @@ class CoalForm(models.Model):
     final_release_ack=models.DateField(blank=True, null=True)
     lat = models.CharField(max_length=255, blank=True, null=True)
     lng = models.CharField(max_length=255, blank=True, null=True)
+    picture = models.ImageField(upload_to='CoalIndiaPics/', blank=True, null=True, default='CoalIndiaPics/noImage.jpg')
+    files = models.FileField(upload_to='CoalIndiaFiles/', blank=True, null=True)
+    commpendium = models.FileField(upload_to='CoalIndiaCompendiums/', blank=True, null=True)
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.picture = self.compressImage(self.picture)
+        super(CoalForm, self).save(*args, **kwargs)
+    def compressImage(self,picture):
+        imageTemproary = Image.open(picture)
+        imageTemproary = imageTemproary.convert('RGB')
+        outputIoStream = BytesIO()
+        imageTemproary = imageTemproary.resize( (1020,573) ) 
+        imageTemproary.save(outputIoStream , format='JPEG', quality=60)
+        outputIoStream.seek(0)
+        picture = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % picture.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
+        return picture
     def __str__(self):
         return self.project_name

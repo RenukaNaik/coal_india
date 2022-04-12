@@ -2,6 +2,20 @@
 {% load static %}
 {% block extra_resources%}
 
+<style>
+  .popupimage {
+    height: 200px;
+    width: 300px;
+    overflow: hidden;
+    border-radius: 50px;
+}
+#map_canvas {
+    height: 100%; 
+    width: 100%; 
+    position: absolute
+}
+
+</style>
 {% endblock %}
 
 {% block map %}
@@ -24,7 +38,7 @@
   </div> 
   
 </div> 
-
+<div id="map_canvas"></div>
 <script>
     let isClicked = false
     var mymap = L.map('mapid').setView([19.7515-1,75.7139-1], 4.5);
@@ -183,9 +197,17 @@
           <td>{{ i.project_status }}</td>
         </tr>
         {% endif %}
+        {% if i.picture %}
+           <tr>
+             <tr><img src={{ i.picture.url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/>
+           </tr>
+        {% endif %}
+ 
         <tr>
           <td><a href="#"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
-          <td><a href="#"><img src="../static/map/images/icons8-image-48.png"/></a></td>
+          {% if i.picture %}
+            <td><a href="{{ i.picture.url }}" class="popupimage"><img src="../static/map/images/icons8-image-48.png"/></a></td>
+          {% endif %}
           <td><a href="#"><img src="../static/map/images/icons8-microsoft-excel-48.png"/></a></td>
         </tr>  
       </tbody>
@@ -229,7 +251,7 @@
 <script>
   
   var pvIcon1 = L.icon({
-         iconUrl: "{% static 'map/images/Coal_India_Logo.png' %}",
+         iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
          iconSize:     [40, 40], // size of the icon
          //shadowSize:   [50, 64], // size of the shadow
          iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
@@ -277,17 +299,26 @@
         </tr>
         {% endif %}
         
-        {% if i.ProjectStatus %}
+        {% if i.Projectstatus %}
         <tr>
           <td>Project Status</td>
-          <td>{{ i.ProjectStatus }}</td>
+          <td>{{ i.Projectstatus }}</td>
         </tr>
         {% endif %}
         <tr>
-          <td><a href="#"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
-          <td><a href="#"><img src="../static/map/images/icons8-image-48.png"/></a></td>
-          <td><a href="#"><img src="../static/map/images/icons8-microsoft-excel-48.png"/></a></td>
-        </tr>  
+          {% if i.commpendium %}
+            <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
+            <input type ="button" onclick='window.open("{{ i.commpendium.url }}", "width=5,height=5,top=1,left=5", "_self")' value="Open Compendium">
+             
+          {% endif %}
+          {% if i.picture %}
+            <td><a href="{{ i.picture.url }}" class = "popupimage2"><img src="../static/map/images/icons8-image-48.png"/></a></td>
+          {% endif %}  
+          {% if i.files %}
+            <td><a href="{{ i.files.url }}"><img src="../static/map/images/icons8-microsoft-excel-48.png"/></a></td>
+             <input type ="button" onclick='window.open("{{ i.files.url }}")' value="Open File">
+            {% endif %}
+          </tr>  
       </tbody>
  </table>
  </br>`
@@ -296,7 +327,11 @@
        'maxWidth': '500',
        'className' : 'another-popup' // classname for another popup
      }
-     var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap).bindPopup(table4, popupOptions);
+
+     var link = $('<a href="#" class="speciallink">TestLink</a>').click(function() {
+    alert("test");
+})[0]
+     var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap).bindPopup(table4, popupOptions, link);
      coalGroup1.addLayer(marker);
      // Added  hover to open popups
     //  marker.on('mouseover', function (e) {
@@ -317,6 +352,9 @@
              isClicked = false
          }
      })
+
+     var str="{{ i.commendium.url }}"
+
  </script>
 {% endfor %}
 

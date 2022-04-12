@@ -59,7 +59,7 @@ select{display: block;padding: 0px;}
               <span style="float: left; color: black; height: 3rem;">Name of Sector</span>
               <select name = "sector" id="sector">
                 <option value="" selected>Choose Your Option</option>
-                <option value="all">All</option>
+                <!-- <option value="all">All</option> -->
                 <option value="education">Education</option>
                 <option value="healthcare">Healthcare</option>
               </select>
@@ -140,7 +140,7 @@ select{display: block;padding: 0px;}
                 <span style="float: left; color: black; height: 3rem;">FY</span>
                 <select name = "fy" id="fy">
                   <option value="" selected>Choose Your Option</option>
-                  <option value="all">All</option>
+                  <!-- <option value="all">All</option> -->
                   <option value="2014-15"> 2014-15</option>
                   <option value="2015-16"> 2015-16</option>
                   <option value="2016-17"> 2016-17</option>
@@ -200,7 +200,27 @@ select{display: block;padding: 0px;}
                       <input type="number" class="fieldlabels" placeholder="Approved Amount" name="approved_amount" id="approved_amount" required> 
                     </div> 
                   </div>
-                  <div class='row' >
+
+                  <label for="img" id="selectimg" style="font-size:14px; padding-right:20px;"><span style="float: left; color: black;">Upload Photo:</span></label>
+        <input type="file"  accept="image/*" name="picture" id="file"  onchange="loadFile(event)" required>
+        <!-- <p><img id="output" width="300"/></p> -->
+        <br>
+        <label for="file" id="selectfile" style="font-size:14px; padding-right:20px;"><span style="float: left; color: black;">Upload File:</span></label>
+        <input type="file"  accept="file/*" name="files" id="file"   required>
+        <br>
+        <label for="file1" id="selectfile1" style="font-size:14px; padding-right:20px;"><span style="float: left; color: black;">Upload Compendium:</span></label>
+        <input type="file"  accept="file/*" name="commpendium" id="file1"   required>
+        <!-- <p><img id="output" width="300"/></p> -->
+
+                  <script>
+                  var loadFile = function(event) {
+                    var image = document.getElementById('output');
+                    image.src = URL.createObjectURL(event.target.files[0]);
+                    document.getElementById("selectimg").style.display="none";
+                  };
+                  </script>
+
+                  <!-- <div class='row' >
                     <div class='input-field col s12'>
                       <span style="float: left; color: black;">Date for Security Completion</span>
                       <input type="date" class="fieldlabels" placeholder="yyyy-mm-dd" name="security_completion" id="security_completion" value=""required > 
@@ -319,7 +339,7 @@ select{display: block;padding: 0px;}
                       <span style="float: left; color: black;">Date of Final Release Acknowledgement</span>
                       <input type="date" class="fieldlabels" placeholder="dd-mm-yyyy" name="final_release_ack" id="final_release_ack" value="" required> 
                     </div> 
-                  </div>
+                  </div> -->
                   <div class="input-section center">
                     <a id="location-btn" class="waves-effect waves-light btn-small" style=" background-color: #4CAF50; visibility: hidden;">Get Location</a>
             
@@ -338,7 +358,7 @@ select{display: block;padding: 0px;}
                   </div>
             {% comment %} <br/> {% endcomment %}
             <div class="form-field" style="margin-bottom: 10px ;text-align:center;">
-              <button class="login-btn btn-large waves-effect waves-dark">Submit</button>
+              <button class="login-btn btn-large waves-effect waves-dark" >Submit</button>
           </div>
                 </div>
      
@@ -528,5 +548,13 @@ document.getElementById('location-btn').click();
         $("#inputDistrict").html(htmlString);
       
       });
+
+//       function IsEmpty() {
+
+// if (document.form.lat.value == "") {
+//   lat.value == 
+// }
+// return;
+// }
     </script>
 {% endblock %}

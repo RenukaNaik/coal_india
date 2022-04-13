@@ -162,7 +162,7 @@
    var coalGroup = L.layerGroup();
 </script>
   
-{% for i in coal %}
+<!-- {% for i in coal %}
 
 <script>
    //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
@@ -213,9 +213,9 @@
           <td><a href="#"><img src="../static/map/images/icons8-microsoft-excel-48.png"/></a></td>
         </tr>  
       </tbody>
- </table>
- </br>`
-    var popupOptions =
+ </table> -->
+ <!-- </br>` -->
+    <!-- var popupOptions =
      {
        'maxWidth': '500',
        'className' : 'another-popup' // classname for another popup
@@ -242,7 +242,7 @@
          }
      })
  </script>
-{% endfor %}
+{% endfor %} -->
 
 
 
@@ -317,9 +317,15 @@
             <td><a href="{{ i.picture.url }}" class = "popupimage2"><img src="../static/map/images/icons8-image-48.png"/></a></td>
           {% endif %}  
           {% if i.files %}
-            <td><a href="{{ i.files.url }}"><img src="../static/map/images/icons8-microsoft-excel-48.png"/></a></td>
+            <td><a href="#"><img src="../static/map/images/icons8-microsoft-excel-48.png" onclick="exportData()"/></a></td>
              
-            {% endif %}
+          {% endif %}
+          {% if i.files %}
+          <button onclick="exportData()">
+            <span class="glyphicon glyphicon-download"></span>
+            Download list</button><br><br>
+             
+          {% endif %}
           </tr>  
       </tbody>
  </table>
@@ -392,4 +398,68 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
+
+
+<script>
+            
+  $(document).ready(function() {
+
+      });
+  function exportData(){
+      /* Get the HTML data using Element by Id */
+      var table = document.getElementById("popup");
+  
+      /* Declaring array variable */
+      var rows =[];
+  
+      //iterate through rows of table
+      for(var i=0,row; row = table.rows[i];i++){
+          //rows would be accessed using the "row" variable assigned in the for loop
+          //Get each cell value/column from the row
+          column1 = row.cells[0].innerText;
+          
+          // column1 = document.getElementById("comment[i]").value;
+          // alert(column1);
+          column2 = row.cells[1].innerText;
+          // column3 = row.cells[2].innerText;
+          // column4 = row.cells[3].innerText;
+          // alert(column1);
+          // column15 = row.cells[14].innerText;
+          // column16 = row.cells[15].innerText;
+          // column17 = row.cells[16].innerText;
+      /* add a new records in the array */  
+          // column11 = column11.replace(/,/g, '.') 
+
+          rows.push(
+              [
+                  column1,
+                  column2,
+                  // column3,
+                  // column4,
+                  // column5,
+                  // column6,
+                  // column7,column8,column9,column10,column11,column12,column13,column14
+                  // // column15,column16,column17
+              ]
+          );
+  
+      }
+      csvContent = "data:text/csv;charset=utf-8,";
+      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
+      rows.forEach(function(rowArray){
+          row = rowArray.join(",");
+          csvContent += row + "\r\n";
+      });
+
+      /* create a hidden <a> DOM node and set its download attribute */
+      var encodedUri = encodeURI(csvContent);
+      var link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "Download.xlsx");
+      document.body.appendChild(link);
+      /* download the data file named "Stock_Price_Report.csv" */
+      link.click();
+}
+
+</script> 
 {% endblock map%}

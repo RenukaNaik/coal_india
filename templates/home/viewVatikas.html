@@ -315,11 +315,15 @@
           {% endif %}
           {% if i.picture %}
             <td><a href="{{ i.picture.url }}" class = "popupimage2"><img src="../static/map/images/icons8-image-48.png"/></a></td>
-          {% endif %}  
-          {% if i.files %}
+          {% else %}
+            <td><img src="../static/map/images/icons8-image-48.png"/></td>
+          
+          
+            {% endif %}  
+          
             <td><a href="#"><img src="../static/map/images/icons8-microsoft-excel-48.png" onclick="exportData()"/></a></td>
              
-          {% endif %}
+          
           {% if i.files %}
           <button onclick="exportData()">
             <span class="glyphicon glyphicon-download"></span>
@@ -329,7 +333,112 @@
           </tr>  
       </tbody>
  </table>
+
+ 
  </br>`
+
+
+ var table5 = 
+      
+      `<table class="w3-table" id="popup1" style="font-size:12px; align:center;" >
+        <tbody>
+      
+        {% if i.project_name %}
+        <tr>
+            <th><b>Project name</b></th>
+            <th><b>{{ i.project_name}}</b></th>
+        </tr>
+        {% endif %}
+        
+        {% if i.sector %}
+        <tr>
+            <th><b>Sector</b></th>
+            <th><b>{{ i.sector}}</b></th>
+        </tr>
+        {% endif %}
+        {% if i.inputState %}
+        <tr>
+          <td>State</td>
+          <td>{{ i.inputState}}</td>
+        </tr>
+        {% endif %}
+
+        {% if i.inputDistrict %}
+        <tr>
+          <td>District</td>
+          <td>{{ i.inputDistrict }}</td>
+        </tr>
+        {% endif %}
+        {% if i.lat %}
+        <tr>
+          <td>Latitude</td>
+          <td>{{ i.lat }}</td>
+        </tr>
+        {% endif %}
+        {% if i.lng %}
+        <tr>
+          <td>Longitude</td>
+          <td>{{ i.lng }}</td>
+        </tr>
+        {% endif %}
+        fy
+        {% if i.fy %}
+        <tr>
+          <td>FY</td>
+          <td>{{ i.fy }}</td>
+        </tr>
+        {% endif %}
+        {% if i.Projectstatus %}
+        <tr>
+          <td>Project Status</td>
+          <td>{{ i.Projectstatus }}</td>
+        </tr>
+        {% endif %}
+        {% if i.agencytype %}
+        <tr>
+          <td>Implementing Agency</td>
+          <td>{{ i.agencytype}}</td>
+        </tr>
+        {% endif %}
+        
+        {% if i.organisation_name %}
+        <tr>
+          <td>Implementing Agency Name</td>
+          <td>{{ i.organisation_name}}</td>
+        </tr>
+        {% endif %}
+        {% if i.request_amount %}
+        <tr>
+          <td>Requested Amount</td>
+          <td>{{ i.request_amount}}</td>
+        </tr>
+        {% endif %}
+        {% if i.approved_amount %}
+        <tr>
+          <td>Approved Amount</td>
+          <td>{{ i.approved_amount}}</td>
+        </tr>
+        {% endif %}
+        
+        <tr>
+          {% if i.commpendium %}
+          <td>Compendium</td>
+            <td>{{ i.commpendium.url }}</td>
+            
+             
+          {% endif %}
+          {% if i.picture %}
+            <td>Picture</td>
+            <td>{{ i.picture.url }}</td>
+          
+            {% endif %}  
+          
+            
+          </tr>  
+      </tbody>
+ </table>
+ </br>`
+
     var popupOptions =
      {
        'maxWidth': '500',
@@ -339,7 +448,7 @@
      var link = $('<a href="#" class="speciallink">TestLink</a>').click(function() {
     alert("test");
 })[0]
-     var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap).bindPopup(table4, popupOptions, link);
+     var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap).bindPopup(table4, popupOptions);
      coalGroup1.addLayer(marker);
      // Added  hover to open popups
     //  marker.on('mouseover', function (e) {
@@ -361,7 +470,7 @@
          }
      })
 
-     var str="{{ i.commendium.url }}"
+     
 
  </script>
 {% endfor %}

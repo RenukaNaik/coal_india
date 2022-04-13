@@ -8,6 +8,16 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
+def edit(request, id):  
+    data = CoalForm.objects.get(id=id)
+    # docdata  = doctor.objects.get(id=id)  
+    # print(data.name)
+   
+    context = {
+        'data':data
+    }
+    # return render(request,'edit.html', {'data':data}) 
+    return render(request,'home/edit.html',context) 
 
 def coalIndia(request):
     # coal = ProjectDetails.objects.all()

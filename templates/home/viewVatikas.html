@@ -397,18 +397,7 @@
           <td>{{ i.Projectstatus }}</td>
         </tr>
         {% endif %}
-        {% if i.request_amount %}
-    <tr>
-      <td>Requested Amount</td>
-      <td>{{ i.request_amount}}</td>
-    </tr>
-    {% endif %}
-    {% if i.approved_amount %}
-    <tr>
-      <td>Approved Amount</td>
-      <td>{{ i.approved_amount}}</td>
-    </tr>
-    {% endif %}
+        
         <tr>
           {% if i.commpendium %}
             <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>

@@ -11,8 +11,8 @@ from django.http import HttpResponse
 import csv
 
 # Create your views here.
-def single(request,project_name):
-    s=CoalForm.objects.get(project_name=project_name)
+def single(request,id):
+    s=CoalForm.objects.get(id=id)
     response = HttpResponse(content_type='text/csv')
 
     writer = csv.writer(response)

@@ -8,7 +8,7 @@ urlpatterns = [
     # path('edit/<int:id>', views.edit, name='edit'),
     path('edit/',views.edit,name='edit'),
     path('export/',views.export,name='export'),
-    path('download/<str:project_name>',views.single,name='download'),
+    path('download/<int:id>',views.single,name='download'),
 
 
 

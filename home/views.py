@@ -13,13 +13,15 @@ import csv
 # Create your views here.
 def single(request,id):
     s=CoalForm.objects.get(id=id)
+    print(s)
     response = HttpResponse(content_type='text/csv')
 
     writer = csv.writer(response)
-    writer.writerow(['Project name', 'Sector', 'State', 'District','Latitude','Longitude','FY','Project Status','Implementing Agency','Implementing Agency Name','Requested Amount','Approved Amount','Compendium','Picture'])
+    writer.writerow(['id','Project name', 'Sector', 'State', 'District','Latitude','Longitude','FY','Project Status','Implementing Agency','Implementing Agency Name','Requested Amount','Approved Amount','Compendium','Picture'])
 
-    for project in CoalForm.objects.filter(project_name=s).values_list('project_name', 'sector', 'inputState', 'inputDistrict','lat','lng','fy','Projectstatus','agencytype','organisation_name','request_amount','approved_amount','commpendium','picture'):
-        writer.writerow(project)
+    for project in CoalForm.objects.filter(project_name=s).values_list('id','project_name', 'sector', 'inputState', 'inputDistrict','lat','lng','fy','Projectstatus','agencytype','organisation_name','request_amount','approved_amount','commpendium','picture','submission_date'):
+        if(CoalForm.objects.filter(project_name=s).latest('id')):
+            writer.writerow(project)
 
     response['Content-Disposition'] = 'attachment; filename="project_info.csv"'
 
@@ -87,6 +89,47 @@ def coalIndia(request):
     's1':s1,'s2':s2}
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewVatikas.html', context )
+
+
+def search(request):
+    # coal = ProjectDetails.objects.all()
+    coalform=CoalForm.objects.all()
+    s1=CoalForm.objects.filter(sector='education')
+    s2=CoalForm.objects.filter(sector='healthcare')
+    fy=CoalForm.objects.values_list('fy').distinct()
+    date=CoalForm.objects.latest('submission_date')
+    print(date)
+    # print(coalform)
+    # print(s1)
+    print(fy)
+    
+    # duplicates = CoalForm.objects.values(
+    # 'inputDistrict').annotate(Count('inputDistrict')).filter(lat__gt=1)
+    # print(duplicates)   #queryset
+    # records = CoalForm.objects.filter(lat__in=[item['inputDistrict'] for item in duplicates])
+    # print(records)
+    # print([item[inputDistrict] for item in records])
+    # for r in duplicates:
+    #     district=r['inputDistrict']
+    #     dist_count=r['inputDistrict__count']
+    #     # print(r['inputDistrict'],r['inputDistrict__count'])
+    #     print(district,dist_count)
+# course_qs = <whatever query gave you the queryset>
+# for course in course_qs:
+#     print(course['course_code'])
+
+#     dupes = Literal.objects.values('name')
+#                        .annotate(Count('id'))
+#                        .order_by()
+#                        .filter(id__count__gt=1)
+# Literal.objects.filter(name__in=[item['name'] for item in dupes])
+    context = {'coal':coal,'coalform':coalform,
+    
+    's1':s1,'s2':s2}
+    # context = {'wells': wells, 'mylist':mylist}
+    return render(request, 'home/search.html', context )
+
+
 
 def coal(request):
     # form = Coalform()

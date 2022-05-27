@@ -9,6 +9,7 @@ urlpatterns = [
     path('edit/',views.edit,name='edit'),
     path('export/',views.export,name='export'),
     path('download/<int:id>',views.single,name='download'),
+    path('search/',views.search,name='search'),
 
 
 

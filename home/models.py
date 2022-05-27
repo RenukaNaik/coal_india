@@ -4,6 +4,8 @@ from PIL import Image
 import sys
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+import datetime
+# from django.utils.timezone.now()
 
 # Create your models here.
 # class ProjectDetails(models.Model):
@@ -56,6 +58,7 @@ class CoalForm(models.Model):
     picture = models.ImageField(upload_to='CoalIndiaPics/', blank=True, null=True, default='')
     files = models.FileField(upload_to='CoalIndiaFiles/', blank=True, null=True)
     commpendium = models.FileField(upload_to='CoalIndiaCompendiums/', blank=True, null=True)
+    submission_date = models.DateTimeField(auto_now_add=True, blank=True)
     # def save(self, *args, **kwargs):
     #     if not self.id:
     #         self.picture = self.compressImage(self.picture)

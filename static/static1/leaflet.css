@@ -146,6 +146,8 @@
 	}
 .leaflet-right .leaflet-control {
 	margin-right: 10px;
+	margin-bottom: 90;  
+	/* to adjust legend above footer */
 	}
 
 

@@ -181,8 +181,8 @@ crossorigin="anonymous"
         <a><i class="material-icons sidenav-trigger" data-target="side-menu">menu</i></a>
       </span></li> -->
     </ul>
-    <div style="text-align: right;">
-      <b style="text-align: right; color: black; font-style: italic; font-size: large;"><p>        Websites shows recently updated data</p></b>
+    <div id="del-it" style="text-align: right;">
+	    <b style="text-align: right; color: black; font-style: italic; font-size: large;"><p>        Websites shows recently updated data</p></b>
     </div>
     <br>
     <!-- <div style="text-align: right;">
@@ -226,7 +226,14 @@ crossorigin="anonymous"
 </ul>
   
   <script>
-    const sideNav = document.querySelector('.sidenav');
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+	    var element = document.getElementById("del-it");
+        element.style.display = "none";
+  // true for mobile device
+}else{
+  // false for not mobile device
+}
+      const sideNav = document.querySelector('.sidenav');
       M.Sidenav.init(sideNav, {});
 
 

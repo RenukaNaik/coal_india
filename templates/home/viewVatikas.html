@@ -295,8 +295,8 @@
       popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
   });
   var iconFy = L.icon({
-      iconUrl: "{% static 'map/images/coal_india_fy.png' %}",
-      // iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
+      // iconUrl: "{% static 'map/images/coal_india_fy.png' %}",
+      iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
       iconSize:     [40, 40], // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
@@ -827,8 +827,9 @@
 
       // console.log(marker);
       sectorlayerGroup3.addLayer(marker);
+      // sectorlayerGroup3.clearLayers();
       // marker.addTo(mymap);
-    // console.log(sectorlayerGroup);
+    console.log(sectorlayerGroup3);
     marker.on('click', function (e) {
            this.openPopup(e.latlng);
      });
@@ -1036,7 +1037,7 @@
     if (sector == "{{i.sector}}"){
       console.log("{{i.sector}}");
       // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
+      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
 
       // console.log(marker);
       sectorlayerGroup2.addLayer(marker);

@@ -201,12 +201,12 @@
     </div>
     &nbsp;&nbsp;
      <div class="tooltips" title="Please select Sector">
-       <select class='form-control' id="sector" name="sector" >
+       <select class='form-control' id="sector" name="sector" onchange="sector()">
            <option value="All">Sector:All</option>
            <optgroup label="Sector"> 
-             <option value="education" onclick="education()">Education</option>
-
-               <option value="healthcare" onclick="healthcare()">HealthCare</option>
+             <!-- <option value="education" onclick="education()">Education</option> -->
+             <option value="education" >Education</option>
+               <option value="healthcare" >HealthCare</option>
                
    
          </select> 
@@ -277,7 +277,8 @@
          popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
      });
      var iconState = L.icon({
-      iconUrl: "{% static 'map/images/coal_india_state.png' %}",
+      // iconUrl: "{% static 'map/images/coal_india_state.png' %}",
+      iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
       iconSize:     [40, 40], // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
@@ -285,7 +286,8 @@
       popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
   });
   var iconDistrict = L.icon({
-      iconUrl: "{% static 'map/images/coal_india_district.png' %}",
+      // iconUrl: "{% static 'map/images/coal_india_district.png' %}",
+      iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
       iconSize:     [40, 40], // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
@@ -294,6 +296,7 @@
   });
   var iconFy = L.icon({
       iconUrl: "{% static 'map/images/coal_india_fy.png' %}",
+      // iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
       iconSize:     [40, 40], // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
@@ -302,6 +305,7 @@
   });
   var iconSector = L.icon({
       iconUrl: "{% static 'map/images/coal_india_sector.png' %}",
+      // iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
       iconSize:     [40, 40], // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
@@ -314,7 +318,7 @@
 <script>var sectorlayerGroup1 = L.layerGroup();</script>
 
 
-
+<!-- education sector -->
 
 <script>
   var marker = {};
@@ -413,6 +417,8 @@
     // console.log(sectorlayerGroup);
     `{% endfor %}`
   }
+
+// healthcare sector
 
   function healthcare(){
     mymap.removeLayer(sectorlayerGroup);
@@ -635,6 +641,7 @@
 <script>
   function fy(){
     // sectorlayerGroup2.removeLayer(marker);
+    
     var fy = document.getElementById('fy').value;
     console.log(fy);
     
@@ -717,7 +724,7 @@
       // console.log(marker);
       sectorlayerGroup2.addLayer(marker);
       // marker.addTo(mymap);
-    // console.log(sectorlayerGroup);
+    console.log(sectorlayerGroup2);
     marker.on('click', function (e) {
            this.openPopup(e.latlng);
      });
@@ -945,9 +952,115 @@
 
     `{% endfor %}`
   }
+
+
+  function sector(){
+    // console.log(sectorlayerGroup2);
+    // mymap.removeLayer(sectorlayerGroup2);
+    // sectorlayerGroup2.clearLayers();
+    // sectorlayerGroup2.removeLayer(marker);
+    var sector = document.getElementById('sector').value;
+    console.log(sector);
+    
+
+    `{% for i in coalform %}`
+    // if `{{i.fy}}` is  fy:
+    var table4 = 
+      
+      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+        <tbody>
+      
+        {% if i.project_name %}
+        <tr>
+            <th><b>Project name</b></th>
+            <th><b>{{ i.project_name}}</b></th>
+        </tr>
+        {% endif %}
+        
+        {% if i.inputState %}
+        <tr>
+          <td>State</td>
+          <td>{{ i.inputState}}</td>
+        </tr>
+        {% endif %}
+
+        {% if i.inputDistrict %}
+        <tr>
+          <td>District</td>
+          <td>{{ i.inputDistrict }}</td>
+        </tr>
+        {% endif %}
+        {% if i.agencytype %}
+        <tr>
+          <td>Implementing Agency</td>
+          <td>{{ i.agencytype}}</td>
+        </tr>
+        {% endif %}
+        
+        {% if i.Projectstatus %}
+        <tr>
+          <td>Project Status</td>
+          <td>{{ i.Projectstatus }}</td>
+        </tr>
+        {% endif %}
+        
+        <tr>
+          {% if i.commpendium %}
+            <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
+            
+             
+          {% endif %}
+          {% if i.picture %}
+            <td><a href="{{ i.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png"/></a></td>
+          {% else %}
+            <td><img src="../static/map/images/icons8-image-48.png"/></td>
+          
+          
+            {% endif %}  
+          
+            <td><a href="download/{{ i.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" /></a></td>
+             
+          
+          
+          </tr>  
+      </tbody>
+ </table>
+
+ 
+ </br>`
+ var popupOptions =
+     {
+       'maxWidth': '500',
+       'className' : 'another-popup' // classname for another popup
+     }
+    if (sector == "{{i.sector}}"){
+      console.log("{{i.sector}}");
+      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
+      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
+
+      // console.log(marker);
+      sectorlayerGroup2.addLayer(marker);
+      // marker.addTo(mymap);
+    // console.log(sectorlayerGroup);
+    marker.on('click', function (e) {
+           this.openPopup(e.latlng);
+     });
+
+     mymap.on ({
+         click: function() {
+             isClicked = false
+         },
+         popupclose: function () {
+             isClicked = false
+         }
+     })
+     
+
+    }
+
+    `{% endfor %}`
+  }
 </script>
-
-
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -1459,7 +1572,7 @@ function putWMSLayer() {
                                                 mymap.setView([lat, lng - 0.4]);
                                                 geojson = L.geoJson(geojsonData.features, {
                                                 // style : style1,
-                                                // onEachFeature: onEachFeature
+                                                onEachFeature: onEachFeature
                                                 }).addTo(mymap);
                                                 // LayerList.push(geojson);
                                                 distLayerList.push(geojson);
@@ -1473,6 +1586,23 @@ function putWMSLayer() {
                                     // console.log(layer_url);
                                     
                                 }
+
+                                function onEachFeature(feature, layer) {
+    // layer.on({
+    //     mouseover: highlightFeature,
+    //     mouseout: resetHighlight,
+    //     click: zoomToFeature
+    // });
+    layer.setStyle({
+        weight: 4,
+        color: '#000000',
+        dashArray: '',
+        // fillOpacity: 0.7
+        
+    });
+
+    
+}
 
                                 function putWMS(layer) {
                                     var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
@@ -1517,7 +1647,7 @@ function putWMSLayer() {
 
 <script>
     let isClicked = false
-    var mymap = L.map('mapid').setView([19.7515-1,75.7139-1], 4);
+    var mymap = L.map('mapid').setView([19.7515-1,75.7139-1],4.5);
     
     var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -1543,6 +1673,7 @@ function putWMSLayer() {
     var wms = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
 				//layer: layer,
         layers: 'geonode:states_in_india',
+        // zoom: 12,
 				format: 'image/png',
 				transparent: 'true',
 			});
@@ -1554,9 +1685,10 @@ function putWMSLayer() {
         layers: 'geonode:all_india_districts_11june2020',
 				format: 'image/png',
 				transparent: 'true',
+        styles: 'all_india_districts_coal_india',
 			});
       wms1.addTo(mymap);
-
+      console.log(wms1);
     // var baseLayers = {
 		//"Grayscale": grayscale,
 		//"Streets": streets
@@ -1627,7 +1759,7 @@ function putWMSLayer() {
 
 
 
-
+//----- add legends to map
 
 //   var legend = L.control({position: 'bottomright'});
 
@@ -1656,42 +1788,42 @@ function putWMSLayer() {
 
 // legend.addTo(mymap);
 
-var legend = L.control({position: 'bottomright'});
+// var legend = L.control({position: 'bottomright'});
 
-legend.onAdd = function (mymap) {
+// legend.onAdd = function (mymap) {
     
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [1,2,3,4,5],
-        labels = ['All','State','District','Sector','Financial Year'];
+//     var div = L.DomUtil.create('div', 'info legend'),
+//         grades = [1,2,3,4,5],
+//         labels = ['All','State','District','Sector','Financial Year'];
 
-    // loop through our density intervals and generate a label with a colored square for each interval
-    div.innerHTML += "<h4>Legend</h4><hr>";
-    for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i class="circle" style="background:' + getColor(grades[i]) + '"></i> ' +
-             ':' + (labels[i]) + '<br>';
-    }
+//     // loop through our density intervals and generate a label with a colored square for each interval
+//     div.innerHTML += "<h4>Legend</h4><hr>";
+//     for (var i = 0; i < grades.length; i++) {
+//         div.innerHTML +=
+//             '<i class="circle" style="background:' + getColor(grades[i]) + '"></i> ' +
+//              ':' + (labels[i]) + '<br>';
+//     }
     
-    //6- 1 state  2- 2 district
-    function getColor(d) {
-        return d ==1 ? '#000000' :
-               d ==2 ? '#ff0000' :
-               d ==3  ? '#00ff00' :
-               d ==4  ? '#006400' :
-               d ==5  ? '#0000ff':
-               d == 6 ? '#d35018':
-               d == 7 ? '#c9626e':
-               d == 8 ? '#b7d811':
-               d == 9 ? '#b97ae3':
-               d == 10 ? '#6eb9db':
-               d == 11 ? '#18f079':
-               d == 12 ? '#71e71d':
-               d == 13 ? '#c976c8':
-               '#FFEDA0';
-    }
-return div;
-}
-legend.addTo(mymap);
+//     //6- 1 state  2- 2 district
+//     function getColor(d) {
+//         return d ==1 ? '#000000' :
+//                d ==2 ? '#ff0000' :
+//                d ==3  ? '#00ff00' :
+//                d ==4  ? '#006400' :
+//                d ==5  ? '#0000ff':
+//                d == 6 ? '#d35018':
+//                d == 7 ? '#c9626e':
+//                d == 8 ? '#b7d811':
+//                d == 9 ? '#b97ae3':
+//                d == 10 ? '#6eb9db':
+//                d == 11 ? '#18f079':
+//                d == 12 ? '#71e71d':
+//                d == 13 ? '#c976c8':
+//                '#FFEDA0';
+//     }
+// return div;
+// }
+// legend.addTo(mymap);
 </script>
 	
    <style>
@@ -1739,91 +1871,6 @@ legend.addTo(mymap);
    var coalGroup = L.layerGroup();
 </script>
   
-<!-- {% for i in coal %}
-
-<script>
-   //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
-
- var table1 = 
-      
-      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if i.name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ i.name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if i.implementing_agency %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ i.implementing_agency}}</td>
-        </tr>
-        {% endif %}
-
-        {% if i.tot_project_outlay %}
-        <tr>
-          <td>Total Project Outlay</td>
-          <td>{{ i.tot_project_outlay }}</td>
-        </tr>
-        {% endif %}
-        
-        {% if i.project_Status %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ i.project_status }}</td>
-        </tr>
-        {% endif %}
-        {% if i.picture %}
-           <tr>
-             <tr><img src={{ i.picture.url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/>
-           </tr>
-        {% endif %}
- 
-        <tr>
-          <td><a href="#"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
-          {% if i.picture %}
-            <td><a href="{{ i.picture.url }}" class="popupimage"><img src="../static/map/images/icons8-image-48.png"/></a></td>
-          {% endif %}
-          <td><a href="#"><img src="../static/map/images/icons8-microsoft-excel-48.png"/></a></td>
-        </tr>  
-      </tbody>
- </table> -->
- <!-- </br>` -->
-    <!-- var popupOptions =
-     {
-       'maxWidth': '500',
-       'className' : 'another-popup' // classname for another popup
-     }
-     var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon}).addTo(mymap).bindPopup(table1, popupOptions);
-     coalGroup.addLayer(marker);
-     // Added  hover to open popups
-    //  marker.on('mouseover', function (e) {
-    //        this.openPopup(e.latlng);
-    //    });
-    //  marker.on('mouseout', function (e) {
-    //        this.openPopup(e.latlng);
-    //  });
-     marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
- </script>
-{% endfor %} -->
-
-
-
-
 
 <!-- coal form -->
 

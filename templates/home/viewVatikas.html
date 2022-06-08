@@ -320,7 +320,7 @@
 
 <!-- education sector -->
 
-<script>
+<!-- <script>
   var marker = {};
   function education(){
     // mymap.removeLayer(marker);
@@ -416,8 +416,8 @@
 
     // console.log(sectorlayerGroup);
     `{% endfor %}`
-  }
-
+  } -->
+<!-- 
 // healthcare sector
 
   function healthcare(){
@@ -523,123 +523,20 @@
     `{% endfor %}`
   }
 
-</script>
+</script> -->
 
 
-
-<!-- {% for s in s2 %}
-<script>
-  function healthcare(){
-    mymap.removeLayer(sectorlayerGroup);
-    sectorlayerGroup.clearLayers();
-    `{% for s in s2 %}`
-    var table4 = 
-      
-      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if s.project_name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ s.project_name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if s.inputState %}
-        <tr>
-          <td>State</td>
-          <td>{{ s.inputState}}</td>
-        </tr>
-        {% endif %}
-
-        {% if s.inputDistrict %}
-        <tr>
-          <td>District</td>
-          <td>{{ s.inputDistrict }}</td>
-        </tr>
-        {% endif %}
-        {% if s.agencytype %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ s.agencytype}}</td>
-        </tr>
-        {% endif %}
-        
-        {% if s.Projectstatus %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ s.Projectstatus }}</td>
-        </tr>
-        {% endif %}
-        
-        <tr>
-          {% if s.commpendium %}
-            <td><a href="{{ s.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
-            
-             
-          {% endif %}
-          {% if s.picture %}
-            <td><a href="{{ s.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png"/></a></td>
-          {% else %}
-            <td><img src="../static/map/images/icons8-image-48.png"/></td>
-          
-          
-            {% endif %}  
-          
-            <td><a href="download/{{ s.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" /></a></td>
-             
-          
-          
-          </tr>  
-      </tbody>
- </table>
-
- 
- </br>`
-    var sector = document.getElementById('sector').value;
-    console.log(sector);
-    console.log(sectorlayerGroup);
-    mymap.removeLayer(sectorlayerGroup);
-    sectorlayerGroup.clearLayers();
-    var popupOptions =
-     {
-       'maxWidth': '500',
-       'className' : 'another-popup' // classname for another popup
-     }
-    
-    // var marker = L.marker(["{{ s.lat }}", "{{ s.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-    var marker = L.marker(["{{ s.lat }}", "{{ s.lng }}"], {icon:pvIcon1}).addTo(mymap).bindPopup(table4, popupOptions);
-
-    // console.log(marker);
-    // sectorlayerGroup1.addLayer(marker);
-    marker.addTo(mymap);
-
-    console.log(sectorlayerGroup1);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-
-    `{% endfor %}`
-  }
-</script>
-{% endfor %}
- -->
 
 <script>var sectorlayerGroup2 = L.layerGroup();</script>
 <script>var sectorlayerGroup3 = L.layerGroup();</script>
 
 <script>
+  var markerlist=[];
   function fy(){
+    console.log("markerlist in sector:",markerlist);
+    // debugger;
+    clear_marker();
+    console.log(markerlist);
     // sectorlayerGroup2.removeLayer(marker);
     
     var fy = document.getElementById('fy').value;
@@ -721,10 +618,13 @@
       // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
 
-      // console.log(marker);
-      sectorlayerGroup2.addLayer(marker);
-      // marker.addTo(mymap);
-    console.log(sectorlayerGroup2);
+      console.log(marker);
+      // sectorlayerGroup2.addLayer(marker);
+      marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
+      // mymap.removeLayer(marker);
+    // console.log(sectorlayerGroup2);
     marker.on('click', function (e) {
            this.openPopup(e.latlng);
      });
@@ -746,6 +646,10 @@
 
 
   function stateProjects(){
+    console.log("markerlist in sector:",markerlist);
+    // debugger;
+    clear_marker();
+    console.log(markerlist);
     // sectorlayerGroup2.removeLayer(marker);
     var state = document.getElementById('indstate').value;
     console.log(state);
@@ -826,10 +730,13 @@
       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconState}).addTo(mymap).bindPopup(table4, popupOptions);
 
       // console.log(marker);
-      sectorlayerGroup3.addLayer(marker);
+      // sectorlayerGroup3.addLayer(marker);
       // sectorlayerGroup3.clearLayers();
       // marker.addTo(mymap);
-    console.log(sectorlayerGroup3);
+      marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
+    // console.log(sectorlayerGroup3);
     marker.on('click', function (e) {
            this.openPopup(e.latlng);
      });
@@ -852,6 +759,10 @@
 
 
   function districtProjects(){
+    console.log("markerlist in sector:",markerlist);
+    // debugger;
+    clear_marker();
+    console.log(markerlist);
     // sectorlayerGroup2.removeLayer(marker);
     var district = document.getElementById('district').value;
     console.log(district);
@@ -932,9 +843,12 @@
       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconDistrict}).addTo(mymap).bindPopup(table4, popupOptions);
 
       // console.log(marker);
-      sectorlayerGroup3.addLayer(marker);
+      // sectorlayerGroup3.addLayer(marker);
       // marker.addTo(mymap);
     // console.log(sectorlayerGroup);
+      marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
     marker.on('click', function (e) {
            this.openPopup(e.latlng);
      });
@@ -956,6 +870,11 @@
 
 
   function sector(){
+    console.log("markerlist in sector:",markerlist);
+    // debugger;
+    clear_marker();
+    console.log(markerlist);
+    // mymap.removeLayer(marker);
     // console.log(sectorlayerGroup2);
     // mymap.removeLayer(sectorlayerGroup2);
     // sectorlayerGroup2.clearLayers();
@@ -1040,9 +959,12 @@
       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
 
       // console.log(marker);
-      sectorlayerGroup2.addLayer(marker);
+      // sectorlayerGroup2.addLayer(marker);
       // marker.addTo(mymap);
     // console.log(sectorlayerGroup);
+      marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
     marker.on('click', function (e) {
            this.openPopup(e.latlng);
      });
@@ -1061,6 +983,17 @@
 
     `{% endfor %}`
   }
+
+
+  function clear_marker() {
+    if (markerlist!==null) {
+    for (var i = markerlist.length - 1; i >= 0; i--) {
+      markerlist[i].remove();
+    }
+}
+                                    // markerlist.forEach(layer => mymap.removeLayer(layer));
+
+                                }
 </script>
 
 
@@ -1132,12 +1065,12 @@ $('#district').on('change', function() {
                                        if (this.value == 'Mumbai City') {
                                            $("#mumwards").show();
                                            $("#mumsubwards").hide();
-                                           removewards();
+                                          //  removewards();
 
                                            $("#block").hide();
                                        } else if (this.value == 'Mumbai Suburban') {
                                            $("#mumwards").hide();
-                                           removewards();
+                                          //  removewards();
                                            $("#mumsubwards").show();
 
                                            $("#block").hide();
@@ -1485,7 +1418,7 @@ function putWMSLayer() {
                                     clear_distlayer();
                                     // clearpoint_layer();
                                     wms_layer.addTo(mymap);
-                                    mymap.setView([stLayerLatLong[1], stLayerLatLong[2] - 2], 6);
+                                    mymap.setView([stLayerLatLong[1], stLayerLatLong[2] - 2], 5);
                                     LayerList.push(wms_layer);
                                     // addWMSLegend(layer);
                                     console.log(LayerList);
@@ -1505,8 +1438,10 @@ function putWMSLayer() {
                                     var layers = 'geonode:all_india_districts_11june2020';
                                     //console.log(indstate);
                                     // var distLayerLatLong= listDistrict[dist];
-                                    if (dist == 'Mumbai City' || dist == 'Mumbai Suburban')
-                                        mymap.setView([19.0760, 72.8777], 11);
+                                    if (dist == 'Mumbai City' || dist == 'Mumbai Suburban'){
+                                        // mymap.setView([19.0760, 72.8777], 7);
+                                        layers = 'geonode:all_india_districts_11june2020';
+                                      }    
                                     if (state == "Chhattisgarh") {
                                         layers = 'geonode:all_india_districts_11june2020';
                                     }
@@ -1595,7 +1530,7 @@ function putWMSLayer() {
     //     click: zoomToFeature
     // });
     layer.setStyle({
-        weight: 4,
+        weight: 3,
         color: '#000000',
         dashArray: '',
         // fillOpacity: 0.7
@@ -1649,7 +1584,7 @@ function putWMSLayer() {
 <script>
     let isClicked = false
     var mymap = L.map('mapid').setView([19.7515-1,75.7139-1],4.5);
-    
+    // var mymap = L.map('mapid').setView([20.5937, 78.9629],4.5);
     var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
@@ -2066,9 +2001,15 @@ function putWMSLayer() {
        'className' : 'another-popup' // classname for another popup
      }
 
-     
+    //  console.log("markerlist in sector:",markerlist);
+    // // debugger;
+    // clear_marker();
+    // console.log(markerlist);
      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap).bindPopup(table4, popupOptions);
-     coalGroup1.addLayer(marker);
+    //  coalGroup1.addLayer(marker);
+    marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
      // Added  hover to open popups
     //  marker.on('mouseover', function (e) {
     //        this.openPopup(e.latlng);

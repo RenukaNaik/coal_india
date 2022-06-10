@@ -136,6 +136,9 @@
 <div id="side-bar" style="background-color: white; ">
   <div id="navigatedarea">
     <!-- these two dropdowns are dependent -->
+    <!-- <b style="text-align: right; color: black; font-style: italic; font-size: large;"><p>        Websites shows recently updated data</p></b>
+
+    <br> -->
     <div class="tooltips" title="Please select the State">
       
       <select class='form-control' id="indstate" name="indstate" onchange="stateProjects()">
@@ -241,8 +244,12 @@
   <div style="text-align: center"> 
     <button style="display: inline-block ;position: relative;top: 100px" id="closebutton" name="closebutton" class="btn btn-secondary"><span class="fa fa-power-off"></span></button> 
 </div>
+
+<div >
+<b style="text-align: right; color: black; font-style: italic; font-size: large; "><p style="position: absolute; bottom: 5; left: 5;">        Websites shows recently updated data</p></b>
 </div>
-<div id="mapid" style="width: 100%; height: 100%;"></div>
+</div>
+<div id="mapid" style="width: 100%; height: 90%;"></div>
 
   <!-- Modal Structure -->
   <div id="demo-modal" class="modal bottom-sheet"> 
@@ -540,7 +547,9 @@
     // sectorlayerGroup2.removeLayer(marker);
     
     var fy = document.getElementById('fy').value;
+    var state = document.getElementById('indstate').value;
     console.log(fy);
+    console.log(state);
     
 
     `{% for i in coalform %}`
@@ -613,7 +622,8 @@
        'maxWidth': '500',
        'className' : 'another-popup' // classname for another popup
      }
-    if (fy == "{{i.fy}}"){
+    if(state=='All'){
+      if (fy == "{{i.fy}}"){
       console.log("{{i.fy}}");
       // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
@@ -640,6 +650,37 @@
      
 
     }
+    } 
+    else{
+      if (fy == "{{i.fy}}" && state == '{{i.inputState}}'){
+      console.log("{{i.fy}}","{{inputState}}");
+      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
+      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
+
+      console.log(marker);
+      // sectorlayerGroup2.addLayer(marker);
+      marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
+      // mymap.removeLayer(marker);
+    // console.log(sectorlayerGroup2);
+    marker.on('click', function (e) {
+           this.openPopup(e.latlng);
+     });
+
+     mymap.on ({
+         click: function() {
+             isClicked = false
+         },
+         popupclose: function () {
+             isClicked = false
+         }
+     })
+     
+
+    }
+    }
+    
 
     `{% endfor %}`
   }
@@ -880,7 +921,9 @@
     // sectorlayerGroup2.clearLayers();
     // sectorlayerGroup2.removeLayer(marker);
     var sector = document.getElementById('sector').value;
+    var state = document.getElementById('indstate').value;
     console.log(sector);
+    console.log(state);
     
 
     `{% for i in coalform %}`
@@ -953,8 +996,9 @@
        'maxWidth': '500',
        'className' : 'another-popup' // classname for another popup
      }
-    if (sector == "{{i.sector}}"){
-      console.log("{{i.sector}}");
+    if (state=='All'){
+      if (sector == "{{i.sector}}" ){
+      console.log("{{i.sector}}","{{i.inputState}}");
       // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
 
@@ -980,6 +1024,38 @@
      
 
     }
+    } 
+    else{
+      if (sector == "{{i.sector}}" && state=='{{i.inputState}}'){
+      console.log("{{i.sector}}","{{i.inputState}}");
+      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
+      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
+
+      // console.log(marker);
+      // sectorlayerGroup2.addLayer(marker);
+      // marker.addTo(mymap);
+    // console.log(sectorlayerGroup);
+      marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
+    marker.on('click', function (e) {
+           this.openPopup(e.latlng);
+     });
+
+     mymap.on ({
+         click: function() {
+             isClicked = false
+         },
+         popupclose: function () {
+             isClicked = false
+         }
+     })
+     
+
+    }
+    }
+
+    
 
     `{% endfor %}`
   }
@@ -1583,7 +1659,16 @@ function putWMSLayer() {
 
 <script>
     let isClicked = false
-    var mymap = L.map('mapid').setView([19.7515-1,75.7139-1],4.5);
+    var mymap = L.map('mapid').setView([19.0760, 84.8777],4.5);
+    
+  //   var mymap = L.map('mapid', {
+  //   center:[19.7515, 75.7139], 
+  //   zoom:4.5, zoomControl:false, 
+  //   attributionControl:false,
+  //   messagebox: true,
+  //   contextmenu: true,
+  //   measureControl: false
+  // });
     // var mymap = L.map('mapid').setView([20.5937, 78.9629],4.5);
     var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -1611,6 +1696,7 @@ function putWMSLayer() {
         layers: 'geonode:states_in_india',
         // zoom: 12,
 				format: 'image/png',
+        // tileSize: 512,
 				transparent: 'true',
 			});
       wms.addTo(mymap);
@@ -1620,8 +1706,10 @@ function putWMSLayer() {
 				//layer: layer,
         layers: 'geonode:all_india_districts_11june2020',
 				format: 'image/png',
+        // tileSize: 512,
 				transparent: 'true',
         styles: 'all_india_districts_coal_india',
+        // upload style to geoserver and give its name in 'styles' parameter
 			});
       wms1.addTo(mymap);
       console.log(wms1);
@@ -1686,7 +1774,7 @@ function putWMSLayer() {
   }).addTo(mymap);
   ctlSidebar.show();
 
-  var ctlZoomslider = L.control.zoomslider({ position: 'topright' }).addTo(mymap);
+  // var ctlZoomslider = L.control.zoomslider({ position: 'topright' }).addTo(mymap);
 
   ctlAttribute = L.control.attribution({ position: 'bottomleft' }).addTo(mymap);
   ctlAttribute.addAttribution('&copy; <a href="http://www.makerghat.org">makerGHAT</a>');
@@ -2054,8 +2142,8 @@ function putWMSLayer() {
         "Districts":indiaDistrict,
         "Maharashtra Highways":mahaHighways,
         "Maharashtra Schools":mahaSchools,
-        "Coal India Projects":coalGroup,
-        "Coal Form":coalGroup1
+        // "Coal India Projects":coalGroup,
+        // "Coal Form":coalGroup1
 	};
 
 	L.control.layers(baseLayers, overlays).addTo(mymap);

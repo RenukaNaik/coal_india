@@ -43,7 +43,8 @@
 {% block map %}
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   
     <!-- Bootstrap CSS -->
     <link
@@ -548,9 +549,11 @@
     
     var fy = document.getElementById('fy').value;
     var state = document.getElementById('indstate').value;
+    var district = document.getElementById('district').value;
+
     console.log(fy);
     console.log(state);
-    
+    console.log(district);
 
     `{% for i in coalform %}`
     // if `{{i.fy}}` is  fy:
@@ -622,7 +625,35 @@
        'maxWidth': '500',
        'className' : 'another-popup' // classname for another popup
      }
-    if(state=='All'){
+     if(fy == "{{i.fy}}" && state == '{{i.inputState}}' && district == '{{i.inputDistrict}}'){
+      console.log("{{i.fy}}","{{i.inputState}}","{{i.inputDistrict}}");
+      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
+      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
+
+      console.log(marker);
+      // sectorlayerGroup2.addLayer(marker);
+      marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
+      // mymap.removeLayer(marker);
+    // console.log(sectorlayerGroup2);
+    marker.on('click', function (e) {
+           this.openPopup(e.latlng);
+     });
+
+     mymap.on ({
+         click: function() {
+             isClicked = false
+         },
+         popupclose: function () {
+             isClicked = false
+         }
+     })
+     
+
+    }
+    
+     if(state=='All'){
       if (fy == "{{i.fy}}"){
       console.log("{{i.fy}}");
       // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
@@ -652,8 +683,8 @@
     }
     } 
     else{
-      if (fy == "{{i.fy}}" && state == '{{i.inputState}}'){
-      console.log("{{i.fy}}","{{inputState}}");
+      if (fy == "{{i.fy}}" && state == '{{i.inputState}}' && district == ""){
+      console.log("{{i.fy}}","{{i.inputState}}");
       // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
 
@@ -680,6 +711,9 @@
 
     }
     }
+
+    
+    
     
 
     `{% endfor %}`
@@ -922,8 +956,11 @@
     // sectorlayerGroup2.removeLayer(marker);
     var sector = document.getElementById('sector').value;
     var state = document.getElementById('indstate').value;
+    var district = document.getElementById('district').value;
+
     console.log(sector);
     console.log(state);
+    console.log(district);
     
 
     `{% for i in coalform %}`
@@ -996,6 +1033,9 @@
        'maxWidth': '500',
        'className' : 'another-popup' // classname for another popup
      }
+     
+    
+      
     if (state=='All'){
       if (sector == "{{i.sector}}" ){
       console.log("{{i.sector}}","{{i.inputState}}");
@@ -1026,6 +1066,7 @@
     }
     } 
     else{
+      if(district == ""){
       if (sector == "{{i.sector}}" && state=='{{i.inputState}}'){
       console.log("{{i.sector}}","{{i.inputState}}");
       // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
@@ -1053,6 +1094,36 @@
      
 
     }
+  }
+  else{
+    if(sector == "{{i.sector}}" && state == '{{i.inputState}}' && district == '{{i.inputDistrict}}'){
+      console.log("{{i.sector}}","{{i.inputState}}","{{i.inputDistrict}}");
+      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
+      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
+
+      console.log(marker);
+      // sectorlayerGroup2.addLayer(marker);
+      marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
+      // mymap.removeLayer(marker);
+    // console.log(sectorlayerGroup2);
+    marker.on('click', function (e) {
+           this.openPopup(e.latlng);
+     });
+
+     mymap.on ({
+         click: function() {
+             isClicked = false
+         },
+         popupclose: function () {
+             isClicked = false
+         }
+     })
+     
+
+    }
+  }
     }
 
     
@@ -1659,8 +1730,8 @@ function putWMSLayer() {
 
 <script>
     let isClicked = false
-    var mymap = L.map('mapid').setView([19.0760, 84.8777],4.5);
-    
+    // var mymap = L.map('mapid').setView([19.0760, 84.8777],4.6);
+    var mymap = L.map('mapid').setView([20.7515, 78.7139],4.6);
   //   var mymap = L.map('mapid', {
   //   center:[19.7515, 75.7139], 
   //   zoom:4.5, zoomControl:false, 

@@ -827,6 +827,34 @@
      
 
      }
+     else{
+      if(state=="All"){
+      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
+      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconState}).addTo(mymap).bindPopup(table4, popupOptions);
+
+      // console.log(marker);
+      // sectorlayerGroup3.addLayer(marker);
+      // sectorlayerGroup3.clearLayers();
+      // marker.addTo(mymap);
+      marker.addTo(mymap);
+      markerlist.push(marker);
+      console.log(markerlist);
+    // console.log(sectorlayerGroup3);
+    marker.on('click', function (e) {
+           this.openPopup(e.latlng);
+     });
+
+     mymap.on ({
+         click: function() {
+             isClicked = false
+         },
+         popupclose: function () {
+             isClicked = false
+         }
+     })
+       
+      }
+     }
 
     `{% endfor %}`
   }

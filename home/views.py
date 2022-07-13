@@ -13,13 +13,13 @@ import csv
 # Create your views here.
 def single(request,id):
     s=CoalForm.objects.get(id=id)
-    print(s)
+    # print(s)
     response = HttpResponse(content_type='text/csv')
 
     writer = csv.writer(response)
     writer.writerow(['id','Project name', 'Sector', 'State', 'District','Latitude','Longitude','FY','Project Status','Implementing Agency','Implementing Agency Name','Requested Amount','Approved Amount','Compendium','Picture'])
 
-    for project in CoalForm.objects.filter(project_name=s).values_list('id','project_name', 'sector', 'inputState', 'inputDistrict','lat','lng','fy','Projectstatus','agencytype','organisation_name','request_amount','approved_amount','commpendium','picture','submission_date'):
+    for project in CoalForm.objects.filter(id=s.id).values_list('id','project_name', 'sector', 'inputState', 'inputDistrict','lat','lng','fy','Projectstatus','agencytype','organisation_name','request_amount','approved_amount','commpendium','picture','submission_date'):
         if(CoalForm.objects.filter(project_name=s).latest('id')):
             writer.writerow(project)
 
@@ -61,8 +61,8 @@ def coalIndia(request):
     s1=CoalForm.objects.filter(sector='education')
     s2=CoalForm.objects.filter(sector='healthcare')
 
-    print(coalform)
-    print(s1)
+    # print(coalform)
+    # print(s1)
     
     # duplicates = CoalForm.objects.values(
     # 'inputDistrict').annotate(Count('inputDistrict')).filter(lat__gt=1)
@@ -98,10 +98,10 @@ def search(request):
     s2=CoalForm.objects.filter(sector='healthcare')
     fy=CoalForm.objects.values_list('fy').distinct()
     date=CoalForm.objects.latest('submission_date')
-    print(date)
+    # print(date)
     # print(coalform)
     # print(s1)
-    print(fy)
+    # print(fy)
     
     # duplicates = CoalForm.objects.values(
     # 'inputDistrict').annotate(Count('inputDistrict')).filter(lat__gt=1)

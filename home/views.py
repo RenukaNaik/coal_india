@@ -18,7 +18,7 @@ def single(request,id):
 
     writer = csv.writer(response)
     writer.writerow(['id','Project name', 'Sector', 'State', 'District','Latitude','Longitude','FY','Project Status','Implementing Agency','Implementing Agency Name','Requested Amount','Approved Amount','Compendium','Picture'])
-
+    # s.id == this will fetch id of each project--- helps in downloading excel sheet of only single project
     for project in CoalForm.objects.filter(id=s.id).values_list('id','project_name', 'sector', 'inputState', 'inputDistrict','lat','lng','fy','Projectstatus','agencytype','organisation_name','request_amount','approved_amount','commpendium','picture','submission_date'):
         if(CoalForm.objects.filter(project_name=s).latest('id')):
             writer.writerow(project)

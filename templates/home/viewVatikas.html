@@ -138,7 +138,6 @@
   <div id="navigatedarea">
     <!-- these two dropdowns are dependent -->
     <!-- <b style="text-align: right; color: black; font-style: italic; font-size: large;"><p>        Websites shows recently updated data</p></b>
-
     <br> -->
     <div class="tooltips" title="Please select the State">
       
@@ -352,7 +351,6 @@
           <td>{{ s.inputState}}</td>
         </tr>
         {% endif %}
-
         {% if s.inputDistrict %}
         <tr>
           <td>District</td>
@@ -394,7 +392,6 @@
           </tr>  
       </tbody>
  </table>
-
  
  </br>`
     var sector = document.getElementById('sector').value;
@@ -412,7 +409,6 @@
     marker.on('click', function (e) {
            this.openPopup(e.latlng);
      });
-
      mymap.on ({
          click: function() {
              isClicked = false
@@ -421,13 +417,11 @@
              isClicked = false
          }
      })
-
     // console.log(sectorlayerGroup);
     `{% endfor %}`
   } -->
 <!-- 
 // healthcare sector
-
   function healthcare(){
     mymap.removeLayer(sectorlayerGroup);
     sectorlayerGroup.clearLayers();
@@ -450,7 +444,6 @@
           <td>{{ s.inputState}}</td>
         </tr>
         {% endif %}
-
         {% if s.inputDistrict %}
         <tr>
           <td>District</td>
@@ -492,7 +485,6 @@
           </tr>  
       </tbody>
  </table>
-
  
  </br>`
     var sector = document.getElementById('sector').value;
@@ -508,16 +500,13 @@
     
     // var marker = L.marker(["{{ s.lat }}", "{{ s.lng }}"], {icon:pvIcon1}).addTo(mymap); 
     var marker = L.marker(["{{ s.lat }}", "{{ s.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
-
     // console.log(marker);
     // sectorlayerGroup1.addLayer(marker);
     marker.addTo(mymap);
-
     console.log(sectorlayerGroup1);
     marker.on('click', function (e) {
            this.openPopup(e.latlng);
      });
-
      mymap.on ({
          click: function() {
              isClicked = false
@@ -527,10 +516,8 @@
          }
      })
      
-
     `{% endfor %}`
   }
-
 </script> -->
 
 
@@ -575,7 +562,6 @@
           <td>{{ i.inputState}}</td>
         </tr>
         {% endif %}
-
         {% if i.inputDistrict %}
         <tr>
           <td>District</td>
@@ -617,7 +603,6 @@
           </tr>  
       </tbody>
  </table>
-
  
  </br>`
  var popupOptions =
@@ -750,7 +735,6 @@
           <td>{{ i.inputState}}</td>
         </tr>
         {% endif %}
-
         {% if i.inputDistrict %}
         <tr>
           <td>District</td>
@@ -792,7 +776,6 @@
           </tr>  
       </tbody>
  </table>
-
  
  </br>`
  var popupOptions =
@@ -891,7 +874,6 @@
           <td>{{ i.inputState}}</td>
         </tr>
         {% endif %}
-
         {% if i.inputDistrict %}
         <tr>
           <td>District</td>
@@ -933,7 +915,6 @@
           </tr>  
       </tbody>
  </table>
-
  
  </br>`
  var popupOptions =
@@ -1011,7 +992,6 @@
           <td>{{ i.inputState}}</td>
         </tr>
         {% endif %}
-
         {% if i.inputDistrict %}
         <tr>
           <td>District</td>
@@ -1053,7 +1033,6 @@
           </tr>  
       </tbody>
  </table>
-
  
  </br>`
  var popupOptions =
@@ -1449,7 +1428,8 @@ function filterCSV(csv, key, value)
 
                                                 result.push(val.pincode);
                                                 unique[val.pincode] = 1;
-
+                                                // result.push(val.block);
+                                                // unique[val.block] = 1;
 
                                             }
                                         })
@@ -1476,6 +1456,27 @@ function filterCSV(csv, key, value)
                                     return result;
                                 }
 
+
+                                //to get data for district in a particular state(to avoid same district name in other states)
+                                // function filterCSV3(csv, key1, value1,key2,value2) {
+                                //     var result = [];
+                                //     var unique = [];
+
+                                //     csv.forEach(function(val, idx, arr) {
+
+                                //         if (val[key1] == value1 && val[key2] == value2) {
+
+                                //             if (!unique[val.block]) {
+                                //                 //console.log(val.block);
+
+                                //                 result.push(val.block)
+                                //                 unique[val.block] = 1;
+                                //             }
+                                //         }
+                                //     })
+                                //     return result;
+                                // }
+
                                 d3.csv("{% static 'static1/data/healthdash/st_dist_pin.csv' %}", function(data) {
                                     $('#indstate').on("change", function(d) {
                                         var val = d3.select(this).property("value");
@@ -1499,42 +1500,46 @@ function filterCSV(csv, key, value)
                                         
                                     });
 
-                                    $('#district').on("change", function(d) {
-                                        var val1 = document.getElementById("indstate").value;
-                                        console.log(val1);
-                                        var val2 = d3.select(this).property("value");
-                                        $('#pincode').find('option').not(':first').remove();
+                                    // $('#district').on("change", function(d) {
+                                    //     var val1 = document.getElementById("indstate").value;
+                                    //     console.log(val1);
+                                    //     var val2 = d3.select(this).property("value");
+                                    //     $('#pincode').find('option').not(':first').remove();
 
-                                        // var data_2 = filterCSV4(data, 'statename', val1, 'Districtname', val2);
-                                        // console.log(data_2);
-                                        // var select = document.getElementById("pincode");
-                                        // for (var i = 0; i < data_2.length; i++) {
-                                        //     var opt = data_2[i];
-                                        //     var el = document.createElement("option");
-                                        //     el.textContent = opt;
-                                        //     el.value = opt;
-                                        //     select.appendChild(el);
-                                        //     // console.log(el)
-                                        // }
-                                        // $('#pincoded3').val("");
-
-
-                                        $('#block_s').find('option').not(':first').remove();
-                                        var data_3 = filterCSV3(data, 'Districtname', val2);
-                                        console.log(data_3);
-                                        var select = document.getElementById("block_s");
-                                        for (var i = 0; i < data_3.length; i++) {
-                                            var opt = data_3[i];
-                                            var el = document.createElement("option");
-                                            el.textContent = opt;
-                                            el.value = opt;
-                                            select.appendChild(el);
-                                            console.log(el)
-                                        }
-                                        $('#block_sd3').val("");
+                                    //     // var data_2 = filterCSV4(data, 'statename', val1, 'Districtname', val2);
+                                    //     // console.log(data_2);
+                                    //     // var select = document.getElementById("pincode");
+                                    //     // for (var i = 0; i < data_2.length; i++) {
+                                    //     //     var opt = data_2[i];
+                                    //     //     var el = document.createElement("option");
+                                    //     //     el.textContent = opt;
+                                    //     //     el.value = opt;
+                                    //     //     select.appendChild(el);
+                                    //     //     // console.log(el)
+                                    //     // }
+                                    //     // $('#pincoded3').val("");
 
 
-                                    });
+                                    //     $('#block_s').find('option').not(':first').remove();
+                                    //     var data_3 = filterCSV3(data, 'Districtname', val2);
+                                    //     // var data_3 = filterCSV3(data, 'Districtname', val2, 'statename',val1);
+                                    //     // var data_3 = filterCSV4(data, 'statename', val1, 'Districtname', val2);
+                                    //     console.log(data_3);
+                                    //     // var select = document.getElementById("block_s");
+                                    //     var select = document.getElementById("district")
+                                    //     console.log("select:",select);
+                                    //     for (var i = 0; i < data_3.length; i++) {
+                                    //         var opt = data_3[i];
+                                    //         var el = document.createElement("option");
+                                    //         el.textContent = opt;
+                                    //         el.value = opt;
+                                    //         select.appendChild(el);
+                                    //         console.log(el)
+                                    //     }
+                                    //     $('#block_sd3').val("");
+
+
+                                    // });
 
                                     
 
@@ -1626,6 +1631,7 @@ function putWMSLayer() {
                                         transparent: 'true',
                                         // version: '1.3.0',
                                         cql_filter: `district='${dist}' AND state='${state}'`,
+                                        // cql_filter: `district='${dist}',
                                         // cql_filter: "district='" + distLayerLatLong[0] + "'",
                                         style: ""
                                     });
@@ -1643,26 +1649,30 @@ function putWMSLayer() {
                                     // mymap.setView([distLayerLatLong[1],distLayerLatLong[2]],8);
                                     // mymap.setView(layers,dist);
                                     // setView1('geonode:india_pincodes_12june',dist);
-                                    setView1('geonode:all_india_districts_11june2020',dist);
+                                    setView1('geonode:all_india_districts_11june2020',dist,state);
                                     distLayerList.push(wms_layer);
                                     // addWMSLegend(layer);
                                     console.log(distLayerList);
+                                    console.log(dist,state);
 
                                 }
-                                function setView1(layerName, selectedBoundary) {
+                                function setView1(layerName, dist,state) {
                                     // alert(layerName);
+                                    console.log(state);
                                     if (area) {
                                         mymap.removeLayer(area);
                                     }
                                     // let rootUrl = '{{site_url}}geoserver/geonode/ows';
-                                    let rootUrl = 'https://geoserver2.communitygis.net/geoserver/geonode/ows';
+                                    if (state == "Delhi"){
+                                      let rootUrl = 'https://geoserver2.communitygis.net/geoserver/geonode/ows';
                                     let options = {
                                         service: 'WFS',
                                         version: '1.0.0',
                                         request: 'GetFeature',
                                         outputFormat: 'application/json',
                                         typeName: layerName,
-                                        cql_filter: `district='${selectedBoundary}'`,
+                                        cql_filter: `district='${dist}' AND state='NCT of Delhi'`,
+                                        
                                         // propertyName: 'the_geom,distname,taluka_nam,atc',
                                     };
                                     let parameters = L.Util.extend(options);
@@ -1694,6 +1704,50 @@ function putWMSLayer() {
                                         console.log('Fetch Error :-S', err);
                                         
                                     });
+                                    }else{
+                                      let rootUrl = 'https://geoserver2.communitygis.net/geoserver/geonode/ows';
+                                    let options = {
+                                        service: 'WFS',
+                                        version: '1.0.0',
+                                        request: 'GetFeature',
+                                        outputFormat: 'application/json',
+                                        typeName: layerName,
+                                        cql_filter: `district='${dist}' AND state='${state}'`,
+                                        // propertyName: 'the_geom,distname,taluka_nam,atc',
+                                    };
+                                    let parameters = L.Util.extend(options);
+                                    layer_url = rootUrl + L.Util.getParamString(parameters)
+                                
+                                    // console.log(layer_url);
+                                    fetch(layer_url).then(
+                                        function(response) {
+                                            if (response.status !== 200) {
+                                                console.log('Looks like there was a problem. Status Code: ' +
+                                                    response.status);
+                                                return;
+                                            }
+                                            response.json().then(function(geojsonData) {
+                                                area = L.geoJson(geojsonData.features).addTo(mymap)
+                                                lat = area.getBounds()._northEast.lat
+                                                lng = area.getBounds()._northEast.lng
+                                                mymap.setView([lat, lng - 0.4]);
+                                                geojson = L.geoJson(geojsonData.features, {
+                                                // style : style1,
+                                                onEachFeature: onEachFeature
+                                                }).addTo(mymap);
+                                                // LayerList.push(geojson);
+                                                distLayerList.push(geojson);
+                                                
+                                                mymap.spin(false);
+                                            });
+                                        }).catch(function(err) {
+                                        console.log('Fetch Error :-S', err);
+                                        
+                                    });
+
+
+                                    }
+                                    
                                     // console.log(layer_url);
                                     
                                 }
@@ -1967,7 +2021,6 @@ function putWMSLayer() {
 .another-popup .leaflet-popup-tip-container {
   width: 10px;
   height: 105px;
-
 }
 .another-popup .leaflet-popup-tip {
   background: beige;
@@ -2033,7 +2086,6 @@ function putWMSLayer() {
           <td>{{ i.inputState}}</td>
         </tr>
         {% endif %}
-
         {% if i.inputDistrict %}
         <tr>
           <td>District</td>
@@ -2075,7 +2127,6 @@ function putWMSLayer() {
           </tr>  
       </tbody>
  </table>
-
  
  </br>`
  var table5 = 
@@ -2102,7 +2153,6 @@ function putWMSLayer() {
           <td>{{ i.inputState}}</td>
         </tr>
         {% endif %}
-
         {% if i.inputDistrict %}
         <tr>
           <td>District</td>

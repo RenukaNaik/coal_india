@@ -59,6 +59,7 @@ class CoalForm(models.Model):
     files = models.FileField(upload_to='CoalIndiaFiles/', blank=True, null=True)
     commpendium = models.FileField(upload_to='CoalIndiaCompendiums/', blank=True, null=True)
     submission_date = models.DateTimeField(auto_now_add=True, blank=True)
+    submitted_by = models.CharField(max_length = 250, default='', blank=True,null = True)
     # def save(self, *args, **kwargs):
     #     if not self.id:
     #         self.picture = self.compressImage(self.picture)

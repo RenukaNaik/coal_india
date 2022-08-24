@@ -10,6 +10,12 @@ from django.db.models import Count
 from django.http import HttpResponse
 import csv
 
+#login dependacies
+from django.contrib.auth import login, authenticate #add this
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from django.contrib.auth.models import User,auth
+
+
 # Create your views here.
 def single(request,id):
     s=CoalForm.objects.get(id=id)
@@ -42,6 +48,7 @@ def edit(request):
     # return render(request,'edit.html', {'data':data}) 
     return render(request,'home/edit.html',context) 
 
+# export--> to archive all data from database table into csv
 def export(request):
     response = HttpResponse(content_type='text/csv')
 
@@ -140,6 +147,7 @@ def coal(request):
             instance.user = request.user
             instance.save()
             print("data is saved.")
+            messages.info(request,"Your Data is submitted successfully")
             return redirect('/coal')
     else:
         form = Coalform()
@@ -203,3 +211,33 @@ def coal(request):
 #     else:
 #         form = CoalForm()
 #     return render(request,'home/coal.html',{})
+
+# def archive(request):
+#     archive=CoalForm.objects.filter(submission_date='2022-05-17 11:27:33.396899+05:30')
+#     return render (request,'home/archive.html',{'archive':archive})
+
+
+
+def login_request(request):
+	if request.method == "POST":
+		form = AuthenticationForm(request, data=request.POST)
+		if form.is_valid():
+			username = form.cleaned_data.get('username')
+			password = form.cleaned_data.get('password')
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				login(request, user)
+				messages.info(request, "You are now logged in as {username}.")
+				return redirect("/")
+			else:
+				messages.error(request,"Invalid username or password.")
+		else:
+			messages.error(request,"Invalid username or password.")
+	form = AuthenticationForm()
+	return render(request=request, template_name="home/login.html", context={"login_form":form})
+
+
+def logout(request):
+    auth.logout(request)
+    messages.info(request, "Logged out successfully!")
+    return redirect('/')

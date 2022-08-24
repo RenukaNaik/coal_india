@@ -7,6 +7,8 @@
 select{display: block;padding: 0px;} 
 
 </style>
+
+{% comment %}
 {% if messages %}
 <ul class="messages" style="color: #4CAF50; font-size: xx-large;">
     {% for message in messages %}
@@ -21,6 +23,9 @@ select{display: block;padding: 0px;}
     {% endfor %}
 </ul>
 {% endif %} 
+{% endcomment %}
+
+
     <form  method="post" enctype="multipart/form-data">
       {% csrf_token %}
     <div class="container">
@@ -1317,4 +1322,17 @@ select{display: block;padding: 0px;}
 // return;
 // }
     </script>
+
+
+{% block javascript %}    
+  {% if messages %}
+  {% for message in messages %}
+    <script>M.toast({html: "{{message}}", classes: 'green rounded', displayLength:2000});</script>
+  {% endfor %}
+  {% endif %}
+  
+  {% endblock javascript %}
+
+
+
 {% endblock %}
